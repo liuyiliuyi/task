@@ -1,0 +1,62 @@
+* {
+  font-family:"microsoft yahei";
+}
+
+body {
+  background-color:white;
+  font-size:0;
+}
+
+table.table {
+  border-collapse:collapse;
+}
+
+.table tr {
+  font-size:14px;
+  line-height:1.5em;
+}
+
+.table thead th {
+  border-bottom:3px solid #ccc;
+  text-align:left;
+}
+
+.table tbody th {
+  text-align:left
+    
+}
+
+
+.table tbody td, tbody th{
+  border-top:1px solid #ccc;
+}
+
+.table th {
+  padding:0.6em;
+}
+
+.table td {
+  width:300px;
+  padding:0.6em;
+}
+
+.table thead th {
+  width:100px;
+}
+
+.table tbody th {
+  width:100px;
+}
+
+.table-striped tbody tr:nth-child(odd) {
+  background:#f9f9f9;
+}
+
+.table-bordered th, .table-bordered td {
+  border:1px solid #ccc;
+}
+
+.table-hover tbody tr:hover {
+  background-color:#eee;
+}
+
