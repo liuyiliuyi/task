@@ -898,7 +898,7 @@ main {
   position: absolute;
   z-index: 10;
   top: 30px;
-  right: 40px;
+  right: 0;
 }
 
 .single_change_button_left {
@@ -950,7 +950,7 @@ main {
 	border-radius: 2px 0 0 2px;
 	display: inline-block;
 	margin-left: -1px;
-	position: absolute;
+	position: relative;
 
 }
 
@@ -1338,24 +1338,6 @@ main {
 	cursor: pointer;
 }
 
-
-.single_change_button{
-  position: absolute;
-  z-index: 10;
-  top: 30px;
-  right: 40px;
-}
-
-.single_change_button_left {
-	height:24px;
-	width: 38px;
-	border: 1px solid #ddd;
-	border-radius: 2px 0 0 2px;
-	display: inline-block;
-	position: relative;
-	
-}
-
 .single_change_button_left:after {
   content:"";
   display: inline-block;
@@ -1382,16 +1364,6 @@ main {
   left:14px;
 }
 
-.single_change_button_right {
-	height:24px;
-	width: 38px;
-	border: 1px solid #ddd;
-	border-radius: 2px 0 0 2px;
-	display: inline-block;
-	margin-left: -1px;
-	position: absolute;
-
-}
 
 .singlestar_li.recommend_for_you {
 	border:none;
