@@ -39,12 +39,12 @@ header {
   display: none !important;
 }
 
-.top_ad {
+.top_gg {
 	
 
 }
 
-.top_ad_a {
+.top_gg_a {
 	background-image: url(yishener.jpg);
 	display: inline-block;
 	height:120px;
@@ -241,13 +241,14 @@ nav>div>ul>li>a {
 	background-color: white;
 	//z-index: ;
 	overflow: hidden;
-	transition: height 0.4s linear;
+	transition: height 0.4s linear, border-top 0s linear 0.4s;
 }
 
 .nav ul:hover .nav_title_dropdown {
   height:229px;
   box-shadow: 0 8px 10px -8px rgba(0, 0, 0, 0.2);
   border-top:1px solid #ddd;
+  transition: height 0.4s linear, border-top 0s linear;
 }
 
 .nav_title_dropdown_limit {
