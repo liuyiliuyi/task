@@ -1634,6 +1634,7 @@ main {
 footer {
 	background: white;
 	//margin-top: 30px;
+	min-width: 1266px;
 }
 
 footer a {
