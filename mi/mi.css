@@ -634,23 +634,23 @@ main {
 
 @keyframes slide{
 	0% {left:0;}
-	10% {left:0;}
-	20% {left:-1266px;}
-	30% {left:-1266px;}
-	40% {left:-2532px;}
-	50% {left:-2532px;}
-	60% {left:-3798px;}
-	70% {left:-3798px;}
-	80% {left:-5064px;}
-	90% {left:-5064px;}
-	100% {left:0;}
+	11% {left:0;}
+	22% {left:-1266px;}
+	33% {left:-1266px;}
+	44% {left:-2532px;}
+	55% {left:-2532px;}
+	66% {left:-3798px;}
+	77% {left:-3798px;}
+	88% {left:-5064px;}
+	100% {left:-5064px;}
+	//100% {left:-5064px;}
 	
 }
 
 .slide_move_div {
 	width: 6330px;
 	position: absolute;
-	animation: slide 20s linear infinite;
+	animation: slide 20s ease-out infinite;
 	//transition: left 0.5s ease;
 }
 
