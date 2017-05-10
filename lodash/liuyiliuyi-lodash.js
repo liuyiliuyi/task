@@ -1217,14 +1217,14 @@ function inRange(number, start, end){
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
+/*
 liuyiliuyi.random = 
 
 function random(lower, upper, floating) {
   if(upper === true || floating === true || lower | 0 != lower || ) {}
 }
 
-
+*/
 
 
 
