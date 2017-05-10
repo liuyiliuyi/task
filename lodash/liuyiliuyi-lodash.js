@@ -1733,7 +1733,7 @@ function escapeRegExp(str){
   //   "}": "\\}",
   //   "|": "\\|",
   // };
-  return str.replace(re, function(x) {return "\\\\" + x});
+  return str.replace(re, function(x) {return "\\" + x});
 }
 
 
@@ -1766,7 +1766,7 @@ liuyiliuyi.lowerCase
 
 liuyiliuyi.lowerFirst =
 function lowerFirst(str) {
-  var str_upper = str.toUpperCase() 
+  var str_upper = str;
   return str_upper[0].toLowerCase() + str_upper.slice(1);
 }
 
@@ -1774,17 +1774,6 @@ function lowerFirst(str) {
 
 
 liuyiliuyi.pad =
-
-function generatorSymbol(length, symbol) {
-  var str = '';
-  while(str.length < length) {
-    str = symbol + str;
-  }
-  return str.slice(0, length)
-}
-
-//左边符号长度为 Math.floor((input_num - input_str.length) / 2)
-//右边符号长度为 Math.ceil((input_num - input_str.length) / 2) 
 
 function pad(input_str, input_num, input_symbol) {
   //if(!input_symbol) {input_symbol = " ";}
@@ -1798,13 +1787,6 @@ function pad(input_str, input_num, input_symbol) {
   return symbol_left + input_str + symbol_right;
 }
 
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-liuyiliuyi.padEnd =
-
 function generatorSymbol(length, symbol) {
   var str = '';
   while(str.length < length) {
@@ -1813,6 +1795,16 @@ function generatorSymbol(length, symbol) {
   return str.slice(0, length)
 }
 
+//左边符号长度为 Math.floor((input_num - input_str.length) / 2)
+//右边符号长度为 Math.ceil((input_num - input_str.length) / 2) 
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+liuyiliuyi.padEnd =
 //左边符号长度为 Math.floor((input_num - input_str.length) / 2)
 //右边符号长度为 Math.ceil((input_num - input_str.length) / 2) 
 
@@ -1824,6 +1816,15 @@ function padEnd(input_str, input_num, input_symbol) {
   return input_str + all_symbol;
 }
 
+function generatorSymbol(length, symbol) {
+  var str = '';
+  while(str.length < length) {
+    str = symbol + str;
+  }
+  return str.slice(0, length)
+}
+
+
 
 
 
@@ -1832,15 +1833,6 @@ function padEnd(input_str, input_num, input_symbol) {
 
 
 liuyiliuyi.padStart =
-
-
-function generatorSymbol(length, symbol) {
-  var str = '';
-  while(str.length < length) {
-    str = symbol + str;
-  }
-  return str.slice(0, length)
-}
 
 //左边符号长度为 Math.floor((input_num - input_str.length) / 2)
 //右边符号长度为 Math.ceil((input_num - input_str.length) / 2) 
@@ -1852,6 +1844,15 @@ function padStart(input_str, input_num, input_symbol) {
   var all_symbol = generatorSymbol(symbol_length, input_symbol);
   return  all_symbol + input_str;
 }
+
+function generatorSymbol(length, symbol) {
+  var str = '';
+  while(str.length < length) {
+    str = symbol + str;
+  }
+  return str.slice(0, length)
+}
+
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2101,17 +2102,17 @@ function unescape(str) {
 
 
 liuyiliuyi.upperCase =
-
-function getWords(str) {  //获得字符串的数组
-  input_str = str;
-  re = /[A-Za-z0-9]+/g;
-  return words = input_str.match(re, input_str);
-}
 function upperCase(str) {
   var words_arr = getWords(str);
   re = /[A-Z]/g;
   output = words_arr.join(" ").replace(re,m=> " " + m).toUpperCase();
   return output;
+}
+
+function getWords(str) {  //获得字符串的数组
+  input_str = str;
+  re = /[A-Za-z0-9]+/g;
+  return words = input_str.match(re, input_str);
 }
 
 
