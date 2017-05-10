@@ -4,19 +4,55 @@ var liuyiliuyi = {};
 Array
 
 
-liuyiliuyi.chunk
+liuyiliuyi.chunk = 
+
+function chunk(array, size = 1) {
+  var store_arr = [];
+  var result = [];
+  var length = Math.floor(array.length / size) * size
+  for (var i = 0; i < length; i++) {
+    store_arr[i % size] = array[i];
+    if(store_arr.length == size) {
+      result.push(store_arr);
+      store_arr = [];
+    }
+    //if((i + 1) % 3 != 0)
+  }
+  for(var j = length; j < array.length; j++) {
+    store_arr[j % size] = array[j];
+  }
+  if(store_arr.length != 0)
+  result.push(store_arr);
+  return result;
+} 
+
+
+
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.compact
+liuyiliuyi.compact = 
+
+function compact(arr){
+  for(var i = 0; i < length; i++) {
+    if(!arr[i]) {
+      arr.splice(i,1)
+    }
+  }
+  return arr;
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.concat
+liuyiliuyi.concat =
+
+function concat(array) {
+  
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1163,9 +1199,16 @@ function clamp(number, lower, upper) {
 
 liuyiliuyi.inRange =
 
-function inRange(number, start, end) {
-  end = end ? end : 0;
+function inRange(number, start, end){
+  if(arguments.length == 2) {
+    end = arguments[1] 
+    start = 0;
+  }
 
+  if((number > start && number < end) || (number > end && number < start)){
+    return true;
+  }
+  else{return false;}
 }
 
 
@@ -1175,7 +1218,22 @@ function inRange(number, start, end) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.random 
+liuyiliuyi.random = 
+
+function random(lower, upper, floating) {
+  if(upper === true || floating === true || lower | 0 != lower || ) {}
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2016,7 +2074,7 @@ function trim(str, symbol) {
 */
 
 function trim(str, symbol) {
-  symbol = symbol ? symbol : " ";
+  symbol = symbol ? symbol : "  　";
   var input_symbol = symbol;
   var input_str_arr = str.split("");
   while(input_symbol.indexOf(input_str_arr[0]) != -1){
@@ -2039,7 +2097,7 @@ function trim(str, symbol) {
 liuyiliuyi.trimEnd =
 
 function trimEnd(str, symbol) {
-  symbol = symbol ? symbol : " ";
+  symbol = symbol ? symbol : "  　";
   var input_symbol = symbol;
   var input_str_arr = str.split("");
   
@@ -2056,7 +2114,7 @@ function trimEnd(str, symbol) {
 liuyiliuyi.trimStart =
 
 function trimStart(str, symbol) {
-  symbol = symbol ? symbol : " ";
+  symbol = symbol ? symbol : "  　";
   var input_symbol = symbol;
   var input_str_arr = str.split("");
   while(input_symbol.indexOf(input_str_arr[0]) != -1){
