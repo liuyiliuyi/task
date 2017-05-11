@@ -36,12 +36,14 @@ function chunk(array, size = 1) {
 liuyiliuyi.compact = 
 
 function compact(arr){
-  for(var i = 0; i < length; i++) {
-    if(!arr[i]) {
-      arr.splice(i,1)
+  var input_arr = arr;
+  var new_arr = [];
+  for(var i = 0; i < input_arr.length; i++) {
+    if(arr[i] != 0) {
+      new_arr.push(arr[i]);
     }
   }
-  return arr;
+  return new_arr;
 }
 
 
@@ -50,22 +52,78 @@ function compact(arr){
 
 liuyiliuyi.concat =
 
-function concat(array) {
-  
+function concat(array,values) {
+  var input_arr = array;
+  var new_arr = [];
+  for(var i = 0; i < arguments.length; i++){
+    if(typeof(arguments[i]) == "object") {
+      for(var j = 0; j < arguments[i].length; j++) {
+        new_arr.push(arguments[i][j]);
+      }
+    } else {
+      new_arr.push(arguments[i]);
+    }
+  }
+  return new_arr;
 }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.difference
+liuyiliuyi.difference = 
+
+function difference(arr, value){
+  var input_arr = arr;
+  var new_arr = [];
+  for(var i = 0; i < input_arr.length; i++) {
+    var count = 0;
+    for(var j = 0; j < value.length; j++) {
+      if(input_arr[i] != value[j]) {
+        count++;
+        //continue;
+      }
+    }
+    if(count == value.length) {
+      new_arr.push(input_arr[i])
+    }
+  }
+  return new_arr;
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.differenceBy
+liuyiliuyi.differenceBy =
 
+function differenceBy(arr, value, iteratee) {
+  
+  var input_arr = arr;
+  var new_arr = [];
+  for(var i = 0; i < input_arr.length; i++) {
+    var count = 0;
+    for(var j = 0; j < value.length; j++) {
+      if(typeof(iteratee) == "function" && iteratee(input_arr[i]) != iteratee(value[j])) {
+        count++;
+        //continue;
+      }
+      if(typeof(iteratee) != "function" && getObjectValue(input_arr[i], iteratee) !=  getObjectValue(value[j], iteratee))
+        count++;
+    }
+    if(count == value.length) {
+      new_arr.push(input_arr[i])
+    }
+  }
+  return new_arr;
+
+}
+
+
+function getObjectValue(object, attr) {
+  var input_object = object;
+  return input_object[attr];
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -76,19 +134,37 @@ liuyiliuyi.differenceWith
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.drop
+liuyiliuyi.drop = 
+ 
+function drop(arr, n = 1) {
+  var new_arr = arr;
+  for(var i = 0; i < n; i++) {
+    new_arr.shift();
+  }
+  return new_arr;
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.dropRight
+liuyiliuyi.dropRight =
+
+function dropRight(arr, n = 1) {
+  var new_arr = arr;
+  for(var i = 0; i < n; i++) {
+    new_arr.pop();
+  }
+  return new_arr;
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.dropRightWhile
+liuyiliuyi.dropRightWhile = 
+
+function 
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1816,7 +1892,30 @@ function kebabCase(str){
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.lowerCase 
+liuyiliuyi.lowerCase = 
+// function lowerCase(str) {
+//   var words_arr = getWords(str);
+//   re = /[A-Z]/g;
+//   output = words_arr.join(" ").replace(re,m=> " " + m).replace(/  /g, " ").toLowerCase().trim();
+//   return output;
+
+// }
+function lowerCase(str) {
+  var words_arr = getWords(str);
+  words_str = words_arr.join(" ");
+  re = /[a-z][A-Z]/g;
+  return words_str.replace(re, m => (m.slice(0,1) + " " + m.slice(1))).toLowerCase();
+  
+} 
+
+function getWords(str) {  //获得字符串的数组
+  input_str = str;
+  re = /[A-Za-z0-9]+/g;
+  return words = input_str.match(re, input_str);
+}
+
+
+
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
