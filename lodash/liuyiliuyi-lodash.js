@@ -1883,7 +1883,19 @@ function kebabCase(str) {
   return lowerCase(str).replace(/ /g, "-")
 }
 
+function lowerCase(str) {
+  var words_arr = getWords(str);
+  words_str = words_arr.join(" ");
+  re = /[a-z][A-Z]/g;
+  return words_str.replace(re, m => (m.slice(0,1) + " " + m.slice(1))).toLowerCase();
+  
+} 
 
+function getWords(str) {  //获得字符串的数组
+  input_str = str;
+  re = /[A-Za-z0-9]+/g;
+  return words = input_str.match(re, input_str);
+}
 
 
 
@@ -2057,6 +2069,19 @@ function kebabCase(str) {
   return lowerCase(str).replace(/ /g, "_")
 }
 
+function lowerCase(str) {
+  var words_arr = getWords(str);
+  words_str = words_arr.join(" ");
+  re = /[a-z][A-Z]/g;
+  return words_str.replace(re, m => (m.slice(0,1) + " " + m.slice(1))).toLowerCase();
+  
+} 
+
+function getWords(str) {  //获得字符串的数组
+  input_str = str;
+  re = /[A-Za-z0-9]+/g;
+  return words = input_str.match(re, input_str);
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
