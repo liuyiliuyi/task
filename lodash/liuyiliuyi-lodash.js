@@ -1879,10 +1879,8 @@ function escapeRegExp(str){
 
 liuyiliuyi.kebabCase =
 
-function kebabCase(str){
-  re = /^[^A-Za-z0-9]*|[^A-Za-z0-9]*$/g;
-  str_trim = str.replace(re, "");
-  return str_trim;
+function kebabCase(str) {
+  return lowerCase(str).replace(/ /g, "-")
 }
 
 
@@ -2053,7 +2051,11 @@ function replace(str, pattern, replacement) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.snakeCase 
+liuyiliuyi.snakeCase = 
+
+function kebabCase(str) {
+  return lowerCase(str).replace(/ /g, "_")
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
