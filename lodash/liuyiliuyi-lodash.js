@@ -128,7 +128,21 @@ function getObjectValue(object, attr) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.differenceWith
+liuyiliuyi.differenceWith  =  
+
+function differenceWith(array, value, Function) {
+  var arr_length = array.length;
+  var val_length = value.length;
+  var result = [];
+  for(i = 0; i < arr_length; i++) {
+    for(j = 0; j < value.length; j++) {
+      if(Function(array[i], value[j])) {
+        result.push(array[i]);
+      }
+    }
+  }
+  return result;
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -533,37 +547,109 @@ liuyiliuyi.zipWith
 //////Collection//////////////////////////////////////////////
 
 
-liuyiliuyi.countBy
+liuyiliuyi.countBy = 
+
+function countBy(collection, something){
+  var object = {};
+  var accept;
+  if(typeof something == "function") {
+
+    for(keys in collection) {
+      accept = something(collection[keys])
+      if(accept in object) {
+        object[accept]++;
+      }
+      else {
+        object[accept] = 1;
+      }
+    }
+  } else if(typeof something == "string") {
+      for(keys in collection) {
+        accept = collection[keys][something];
+      if(accept in object) {
+        object[accept]++;
+      }
+      else {
+        object[accept] = 1;
+      }
+    }
+  }
+  return object;
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.each
+liuyiliuyi.each = 
+
+function each(collection, something){
+  for(key in collection) {
+    if(false === something(collection[key], key, collection)){
+      break;
+    }
+  }
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.eachRight
+liuyiliuyi.eachRight =
+
+function eachRight(collection, iteratee) {
+  if(collection instanceof Array) {
+    for(i = collection.length - 1; i >= 0; i--) {
+      if(false === iteratee(collection[i], i, collection)) {
+        break;
+      }
+    }
+  } else {
+    for(key in collection) {
+      if(false === iteratee(collection[key], key, collection)) {
+        break;
+      }
+    }
+  }
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.every
+liuyiliuyi.every =
+
+function every(collection, iteratee) {
+  for(key in collection) {
+    if(iteratee(collection[key], key, collection) === false) {
+      return false;
+    }
+  }
+  return true;
+}
+
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.filter
+liuyiliuyi.filter =
+
+function filter(collection, iteratee) {
+  var arr = [];
+  for(key in collection) {
+    if(iteratee(collection[key], key, collection) == true) {
+      arr.push(collection[key]);
+    }
+  }
+  return arr;
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.find
+liuyiliuyi.find = 
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -713,13 +799,21 @@ liuyiliuyi.now
 Function///////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.after
+liuyiliuyi.after = 
+
+function after(n, func) {
+  
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.ary
+liuyiliuyi.ary = 
+
+function ary(func, length) {
+  return 
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
