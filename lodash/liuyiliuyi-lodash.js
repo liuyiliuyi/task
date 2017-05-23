@@ -39,7 +39,7 @@ function compact(arr){
   var input_arr = arr;
   var new_arr = [];
   for(var i = 0; i < input_arr.length; i++) {
-    if(!arr[i]) {
+    if(arr[i]) {
       new_arr.push(arr[i]);
     }
   }
