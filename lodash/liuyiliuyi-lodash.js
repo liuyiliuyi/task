@@ -130,18 +130,21 @@ function getObjectValue(object, attr) {
 
 liuyiliuyi.differenceWith  =  
 
-function differenceWith(array, value, Function) {
-  var arr_length = array.length;
-  var val_length = value.length;
-  var result = [];
-  for(i = 0; i < arr_length; i++) {
+function dropRightWhile(objects, value, comparator) {
+  var arr = [];
+  var amount;
+  for(i = 0; i < objects.length; i++) {
+    amount = 0;
     for(j = 0; j < value.length; j++) {
-      if(Function(array[i], value[j])) {
-        result.push(array[i]);
+      if(!comparator(objects[i], value[j])) {
+        amount++;
       }
     }
+    if(amount == value.length) {
+      arr.push(objects[i]);
+    }
   }
-  return result;
+  return arr;
 }
 
 
@@ -175,16 +178,39 @@ function dropRight(arr, n = 1) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/*
 liuyiliuyi.dropRightWhile = 
 
-function 
-*/
+
+_.dropRightWhile(users, _.matches({ 'user': 'pebbles', 'active': false }));
+
+// function dropRightWhile(objects, value, comparator) {
+//   var arr = [];
+//   var amount;
+//   for(i = 0; i < objects.length; i++) {
+//     amount = 0;
+//     for(j = 0; j < value.length; j++) {
+//       if(!comparator(objects[i], value[j])) {
+//         amount++;
+//       }
+//     }
+//     if(amount == value.length) {
+//       arr.push(objects[i]);
+//     }
+//   }
+//   return arr;
+// }
+
+function dropRightWhile(array, ) {
+  
+
+}
+
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.dropWhile
+liuyiliuyi.dropWhile = 
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
