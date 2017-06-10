@@ -1328,68 +1328,164 @@ liuyiliuyi.floor = function floor(number, pos = 0) {
 
 
 liuyiliuyi.max = function max(array) {
-  return Math.max.apply(null, array);
+  return array.length == 0? null : Math.max.apply(null, array);
 }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.maxBy
+liuyiliuyi.maxBy = function maxBy(array, iteratee) {
+  var max = array[0];
+  if(typeof iteratee == "function"){
+    for(var i = 0; i < array.length; i++) {
+      if(iteratee(array[i]) > iteratee(max)) {
+        max = array[i];
+      }
+    }
+  }   else if(typeof iteratee == "string") {
+    for(var i = 0; i < array.length; i++) {
+      if(liuyiliuyi.property(iteratee)(array[i]) > liuyiliuyi.property(iteratee)(max)) {
+        max = array[i];
+      }
+    }
+  }
+  return max;
+}
+
+
+//   else if(typeof iteratee == "string") {
+//     for(i = 0; i < array.length; i++) {
+//       if(array[i][iteratee] > max[iteratee]) {
+//         max = array[i];
+//       }
+//     }
+//   }
+//   return max;
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.mean
+liuyiliuyi.mean = function mean(array) {
+  //array.reduce((a,b) => (a + b) / i * (i - 1))
+  return array.reduce((a, b) => a + b) / array.length;
+}
+
+
+liuyiliuyi.matches = function matches(target) {
+  return function(source) {
+
+  }
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+liuyiliuyi.meanBy = function meanBy(array, iteratee) {
+  var sum = 0;
+  if(typeof iteratee == "function") {
+    for(i = 0; i < array.length; i++) {
+      sum = sum + iteratee(array[i]);
+    }
+  }
+  else if(typeof iteratee == "string") {
+    for(var i = 0; i < array.length; i++) {
+      sum = sum + liuyiliuyi.property(iteratee)(array[i]);
+    }
+  }
+  return sum / array.length;
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.meanBy
+liuyiliuyi.min =
+
+function min(array) {
+  return array.length === 0 ? undefined : Math.min(...array);
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.min
+liuyiliuyi.minBy =
+
+function minBy(array, iteratee) {
+  var min = array[0];
+  if(typeof iteratee == "function") {
+    for(i = 0; i < array.length; i++) {
+      min = iteratee(array[i]) > iteratee(min) ? min : array[i]; 
+    }
+  } else if (typeof iteratee == "string") {
+    for(i = 0; i < array.length; i++) {
+      min = liuyiliuyi.property(iteratee)(array[i]) > liuyiliuyi.property(iteratee)(min) ? min : array[i];
+    }
+  }
+  return min;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+liuyiliuyi.multiply =
+
+function multiply(x, y) {
+  return x * y;
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.minBy
+liuyiliuyi.round = 
+
+function round(number, pos = 0) {
+  return Math.round(number * 10 ** pos) / 10 ** pos;
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.multiply
+liuyiliuyi.subtract =
+
+function subtract(minuend, subtrahend) {
+  return minuned - subtrahend;
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.round
+liuyiliuyi.sum = 
+
+function sum(array) {
+  array.reduce((a, b) => a + b);
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.subtract
+liuyiliuyi.sumBy =
 
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-liuyiliuyi.sum
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-liuyiliuyi.sumBy
+function sumBy(array, iteratee) {
+  var sum = 0;
+  if(typeof iteratee == "function") {
+    for(let i = 0; i < array.length; i++) {
+      sum = sum + iteratee(array[i]);
+    }
+  } else if (typeof iteratee == "string") {
+    for(lef i = 0; i < array.length; i++) {
+      sum = sum + liuyiliuyi.property(iteratee)(array[i])
+    }
+  }
+  return sum;
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2465,7 +2561,7 @@ function words(str, pattern) {
 
 
 //Util/////////////////////////////////////////////////
-/*
+
 
 liuyiliuyi.attempt
 
@@ -2593,7 +2689,18 @@ liuyiliuyi.overSome
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.property
+liuyiliuyi.property = 
+
+function(path) {
+  var arr = path.match(/[^.]+/g);
+  return function(obj) {
+    var result = obj;
+    for(var i = 0; i < arr.length; i++) {
+      result = result[arr[i]];
+    }
+    return result;
+  }
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
