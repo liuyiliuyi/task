@@ -1328,7 +1328,7 @@ liuyiliuyi.floor = function floor(number, pos = 0) {
 
 
 liuyiliuyi.max = function max(array) {
-  return array.length == 0? null : Math.max.apply(null, array);
+  return array.length == 0? undefined : Math.max.apply(null, array);
 }
 
 
@@ -1454,7 +1454,7 @@ function round(number, pos = 0) {
 liuyiliuyi.subtract =
 
 function subtract(minuend, subtrahend) {
-  return minuned - subtrahend;
+  return minuend - subtrahend;
 }
 
 
@@ -1464,7 +1464,7 @@ function subtract(minuend, subtrahend) {
 liuyiliuyi.sum = 
 
 function sum(array) {
-  array.reduce((a, b) => a + b);
+  return array.reduce((a, b) => a + b);
 }
 
 
