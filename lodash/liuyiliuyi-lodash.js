@@ -1525,14 +1525,20 @@ function inRange(number, start, end){
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/*
+
 liuyiliuyi.random = 
 
 function random(lower, upper, floating) {
-  if(upper === true || floating === true || lower | 0 != lower || ) {}
+    var rand = Math.random() 
+    if(lower !== 0 && upper == undefined){ return rand * lower | 0}
+    else if(lower !== 0 && typeof upper == "boolean") {
+    return upper == true ?  rand * lower : rand * lower | 0; 
+  } else if ((lower | 0) == lower && (upper | 0) == upper){
+    return floating == true ?  lower + rand * (upper - lower) : (lower + rand * (upper - lower)) | 0;
+  } else return lower + rand * (upper - lower);
 }
 
-*/
+
 
 
 
