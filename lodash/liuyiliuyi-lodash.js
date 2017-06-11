@@ -241,13 +241,33 @@ function fill(array, value, start = 0, end) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.findIndex 
+liuyiliuyi.findIndex =
+
+function findIndex(array, predivate, fromIndex = 0) {
+  var a = liuyiliuyi.judge(predivate);
+  for(i = fromIndex; i < array.length; i++) {
+    if(a(array[i]) == true) {
+      return i
+    }
+  }
+  return -1;
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.findLastIndex
+liuyiliuyi.findLastIndex = 
+
+function findIndex(array, predivate, fromIndex = array.length) {
+  var a = liuyiliuyi.judge(predivate);
+  for(i = fromIndex; i >= 0; i--) {
+    if(a(array[i]) == true) {
+      return i;
+    }
+  }
+  return -1;
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -267,24 +287,28 @@ function head(array) {
 liuyiliuyi.flatten =
 
 function flatten(array) {
-  var input_arr = array;
-  new_arr = [];
-  for(var i = 0; i < array.length; i++) {
-    new_arr[i] = input_arr[i];
-  }
+  return array.concat().reduce((a, b) => a.concat(b), []);
 }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.flattenDeep
+liuyiliuyi.flattenDeep = 
+
+function flattenDeep(array) {
+  return array.concat().reduce((a, b) => a.concat(Array.isArray(b) ? flattenDeep(b) : b), []);
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.flattenDepth
+liuyiliuyi.flattenDepth = 
+
+function flattenDepth(array, depth = 1) {
+  return array.concat().reduce((a, b) => a.concat(Array.isArray(b) && depth > 0 ? flattenDepth(b, --depth) : b), []);
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
