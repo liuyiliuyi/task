@@ -314,43 +314,115 @@ function flattenDepth(array, depth = 1) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.fromPairs
+liuyiliuyi.fromPairs =
+
+function fromPairs(pairs) {
+  var obj = {};
+  for(key in pairs) {
+    obj[pairs[key][0]] = pairs[key][1]
+  }
+  return obj;
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.head
+liuyiliuyi.head = 
+
+function head(array) {
+  return array[0];
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.indexOf
+liuyiliuyi.indexOf = 
 
+function indexOf(array, value, fromIndex = 0) {
+  if(fromIndex < 0) {
+    return array.lastIndex(value, fromIndex + array.length)
+  } else {
+    return array.indexOf(value, fromIndex);
+  }
+}
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-liuyiliuyi.initial
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-liuyiliuyi.intersection
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.intersectionBy
+liuyiliuyi.initial = 
+
+function initial(array) {
+  array.pop();
+  return array;
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.intersectionWith
+liuyiliuyi.intersection =
+
+function intersection(...ary) {
+  var arr1 = ary[0];
+  var new_arr = [];
+  for(i = 0; i < arr1.length; i++) {
+    amount = 0
+    for(j = 0; j < ary.length; j++) {
+      if(ary[j].indexOf(arr1[i]) == -1) {
+        break;
+      } else amount++;
+    }
+    if(amount == ary.length) {
+      new_arr.push(arr1[i]);
+    }
+  }
+  return new_arr;
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+liuyiliuyi.intersectionBy = 
+
+function intersectionBy(...arg) {
+  var iteratee = arg.pop(); 
+  var a = liuyiliuyi.judge(iteratee);
+  var new_arg = arg.map(x => x.map(b => a(b)));
+  
+
+
+  var arr1 = new_arg[0];
+  var new_arr = [];
+  for(i = 0; i < arr1.length; i++) {
+    amount = 0;
+    for(j = 0; j < arg.length; j++) {
+      if(new_arg[j].indexOf(arr1[i]) == -1) {
+        break;
+      } else amount++;
+    }
+    if(amount == new_arg.length) {
+      new_arr.push(arg[0][i]);
+    }
+  }
+  return new_arr;
+
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+liuyiliuyi.intersectionWith = 
+
+function intersectionWith(...arg) {
+  var comparator = arg.pop();
+  return arg[0].filter(x => arg[1].some(comparator.bind(null,x)));
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
