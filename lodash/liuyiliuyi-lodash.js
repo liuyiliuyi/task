@@ -468,7 +468,7 @@ function lastIdexOf(array, value, fromIndex = array.length -1) {
 liuyiliuyi.nth =
 
 function nth(array, n) {
-  return n < 0 ? array[length + n] : array[n];
+  return n < 0 ? array[array.length + n] : array[n];
 }
 
 
@@ -496,7 +496,7 @@ function pull(array, ...value) {
 liuyiliuyi.pullAll = 
 
 function pullAll(array, values) {
-  return liuyiliuyi.pull(array, values);
+  return liuyiliuyi.pull.bind(null, array).apply(null,values);
 }
 
 
@@ -671,7 +671,29 @@ function sortedIndexOf(array, value) {
 liuyiliuyi.sortedLastIndex =
 
 function sortedLastIndex(array, value) {
-  return array.lastIndexOf(value);
+  if(array.length == 1) {
+    return 1;
+  }
+  for(i = 0; i < array.length; i++) {
+    if(array[1] > array[0] && value < array[0]) {
+      return 0
+    } 
+    else if(array[1] > array[0] && value >= array[array.length - 1]) {
+      return array.length;
+    }
+    else if(array[1] > array[0] && array[i] <= value && value < array[i + 1]) {
+      return i + 1;
+    }
+    else if(array[0] > array[1] && value > array[0]) {
+      return 0;
+    } 
+    else if(array[0] > array[1] && value <= array[array.length - 1]) {
+      return array.length;
+    }
+    else if(array[0] > array[1] && array[i] >= value && value > array[i + 1]) {
+      return i + 1;
+    }
+  } 
 }
 
 
@@ -733,9 +755,10 @@ function sortedUniq(array) {
 
 liuyiliuyi.sortedUniqBy =
 
-function sortedUniqBy(array, iteratee) {
-  return liuyiliuyi.sortedUniq(array.map(iteratee));
-}
+// function sortedUniqBy(array, iteratee) {
+//   var new_array.map(iteratee).reduce((a, b) => a.indexOf(b) == -1 ? a.concat(b) : a, [])
+//   return array.reduce((a, b) => array.indexOf(iteratee(b)) == -1 ? a.concat(b) ; new_array : , [])
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
