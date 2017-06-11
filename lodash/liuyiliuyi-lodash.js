@@ -259,7 +259,7 @@ function findIndex(array, predivate, fromIndex = 0) {
 
 liuyiliuyi.findLastIndex = 
 
-function findIndex(array, predivate, fromIndex = array.length) {
+function findIndex(array, predivate, fromIndex = array.length - 1) {
   var a = liuyiliuyi.judge(predivate);
   for(i = fromIndex; i >= 0; i--) {
     if(a(array[i]) == true) {
@@ -307,7 +307,7 @@ function flattenDeep(array) {
 liuyiliuyi.flattenDepth = 
 
 function flattenDepth(array, depth = 1) {
-  return array.concat().reduce((a, b) => a.concat(Array.isArray(b) && depth > 0 ? flattenDepth(b, --depth) : b), []);
+  return array.concat().reduce((a, b) => a.concat(Array.isArray(b) && depth > 1 ? flattenDepth(b, --depth) : b), []);
 }
 
 
@@ -428,121 +428,314 @@ function intersectionWith(...arg) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.join
+liuyiliuyi.join =
+
+function join(array, separator) {
+  return array.join(separator);
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.last
+liuyiliuyi.last =
+
+function last(array) {
+  return array[array.length - 1];
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.lastIndexOf
+liuyiliuyi.lastIndexOf =
+
+function lastIdexOf(array, value, fromIndex = array.length -1) {
+  for(i = fromIndex; i >= 0; i--) {
+    if(array[i] == value) {
+      return i;
+    }
+  }
+  return -1;
+}
+
+
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.nth
+liuyiliuyi.nth =
+
+function nth(array, n) {
+  return n < 0 ? array[length + n] : array[n];
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.pull
+liuyiliuyi.pull =
+
+function pull(array, ...value) {
+  for(i = 0; i < value.length; i++) {
+    for(j = 0; j < array.length; j++) {
+      if(array[j] === value[i]) {
+        array.splice(j,1);
+        j--;
+      }
+    }
+  }
+  return array;
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.pullAll
+liuyiliuyi.pullAll = 
+
+function pullAll(array, values) {
+  return liuyiliuyi.pull(array, values);
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.pullAllBy
+liuyiliuyi.pullAllBy =
+
+function pullAllBy(array, values, iteratee) {
+  var a = liuyiliuyi.judge(iteratee);
+  for(i = 0; i < values.length; i++) {
+    for(j = 0; j < array.length; j++) {
+      if(a(array[j]) === a(values[i])) {
+        array.splice(j,1);
+        j--;
+      }
+    }
+  }
+  return array;
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.pullAllWith
+liuyiliuyi.pullAllWith = 
+
+function pullAllWith(array, values, comparator) {
+  for(i = 0; i < values.length; i++) {
+    for(j = 0; j < array.length; j++) {
+      if(comparator(values[i], array[j])) {
+        array.splice(j,1);
+        j--;
+      }
+    }
+  }
+  return array;
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.pullAt
+liuyiliuyi.pullAt =
+
+function pullAt(array, ...indexes) {
+  var arr = Array.from(indexes).sort((a, b) => a - b);
+  var amount = 0;
+  for(var i = 0; i < arr.length; i++) {
+    array.splice(arr[i] - amount, 1);
+    amount++;
+  }
+  return array;
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.remove
+liuyiliuyi.remove = 
+
+function remove(array, predicate) {
+  var arr = [];
+  for(var i = 0; i < array.length; i++) {
+    if(predicate(array[i]) == true) {
+      arr.splice(arr.length, 0, array.splice(i, 1)[0]);
+      i--;
+    }
+  }
+  return arr;
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.reverse
+liuyiliuyi.reverse =
+
+function reverse(array) {
+  return array.reverse();
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.slice
+liuyiliuyi.slice = 
+
+function slice(array, start = 0; end = array.length) {
+  return array.slice(start,end);
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.sortedIndex
+liuyiliuyi.sortedIndex =
+
+function sortedIndex(array, value) {
+  if(array.length == 1) {
+    return 0;
+  }
+  for(i = 0; i < array.length; i++) {
+    if(array[1] > array[0] && value <= array[0]) {
+      return 0
+    } 
+    else if(array[1] > array[0] && value > array[array.length - 1]) {
+      return array.length;
+    }
+    else if(array[1] > array[0] && array[i] < value && value <= array[i + 1]) {
+      return i + 1;
+    }
+    else if(array[0] > array[1] && value >= array[0]) {
+      return 0;
+    } 
+    else if(array[0] > array[1] && value < array[array.length - 1]) {
+      return array.length;
+    }
+    else if(array[0] > array[1] && array[i] > value && value >= array[i + 1]) {
+      return i + 1;
+    }
+  } 
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.sortedIndexBy
+liuyiliuyi.sortedIndexBy = 
+
+function sortedIndexBy(array, value, iteratee) {
+  var a = liuyiliuyi.judge(iteratee);
+  if(array.length == 1) {
+    return 0;
+  }
+  for(i = 0; i < array.length; i++) {
+    if(a(array[1]) > a(array[0]) && a(value) <= a(array[0])) {
+      return 0
+    } 
+    else if(a(array[1]) > a(array[0]) && a(value) > a(array[array.length - 1])) {
+      return array.length;
+    }
+    else if(a(array[1]) > a(array[0]) && a(array[i]) < a(value) && a(value) <= a(array[i + 1])) {
+      return i + 1;
+    }
+    else if(a(array[0]) > a(array[1]) && a(value) >= a(array[0])) {
+      return 0;
+    } 
+    else if(a(array[0]) > a(array[1]) && a(value) < a(array[array.length - 1])) {
+      return array.length;
+    }
+    else if(a(array[0]) > a(array[1]) && a(array[i]) > a(value) && a(value) >= a(array[i + 1])) {
+      return i + 1;
+    }
+  } 
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.sortedIndexOf
+liuyiliuyi.sortedIndexOf = 
+
+function sortedIndexOf(array, value) {
+  return array.indexOf(value);
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.sortedLastIndex
+liuyiliuyi.sortedLastIndex =
+
+function sortedLastIndex(array, value) {
+  return array.lastIndexOf(value);
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.sortedLastIndexBy
+liuyiliuyi.sortedLastIndexBy = 
+
+function sortedLastIndexBy(array, value, iteratee) {
+  var a = liuyiliuyi.judge(iteratee);
+  if(array.length == 1) {
+    return 1;
+  }
+  for(i = 0; i < array.length; i++) {
+    if(a(array[1]) > a(array[0]) && a(value) < a(array[0])) {
+      return 0
+    } 
+    else if(a(array[1]) > a(array[0]) && a(value) >= a(array[array.length - 1])) {
+      return array.length;
+    }
+    else if(a(array[1]) > a(array[0]) && a(array[i]) <= a(value) && a(value) < a(array[i + 1])) {
+      return i + 1;
+    }
+    else if(a(array[0]) > a(array[1]) && a(value) > a(array[0])) {
+      return 0;
+    } 
+    else if(a(array[0]) > a(array[1]) && a(value) <= a(array[array.length - 1])) {
+      return array.length;
+    }
+    else if(a(array[0]) > a(array[1]) && a(array[i]) >= a(value) && a(value) > a(array[i + 1])) {
+      return i + 1;
+    }
+  } 
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.sortedLastIndexOf
+liuyiliuyi.sortedLastIndexOf =
+
+function sortedLastIndexOf(array,value) {
+  return array.lastIndexOf(value);
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.sortedUniq
+liuyiliuyi.sortedUniq = 
+
+function sortedUniq(array) {
+  return array.reduce((a, b) => a.indexOf(b) == -1 ? a.concat(b) : a, [])
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.sortedUniqBy
+liuyiliuyi.sortedUniqBy =
+
+function sortedUniqBy(array, iteratee) {
+  return liuyiliuyi.sortedUniq(array.map(iteratee));
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
