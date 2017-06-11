@@ -180,19 +180,45 @@ function dropRight(arr, n = 1) {
 
 liuyiliuyi.dropRightWhile = 
 
-
-
-function dropRightWhile(array) {
-  
-
+function dropRightWhile(array, predicate) {
+  var a = liuyiliuyi.judge(predicate);
+  for(i = array.length - 1; i >= 0; i--) {
+      if(a(array[i]) == false) {
+        array.splice(i + 1);
+        return array;
+      }
+  }
+  return [];
 }
 
-
+liuyiliuyi.judge = 
+function judge(arg) {
+  var str = Object.prototype.toString.call(arg); 
+  if(str == "[object Object]") {
+    return _.matches(arg);
+  } else if(str == "[object String]") {
+    return _.property(arg);
+  } else if(str == "[object Array]") {
+    return _.matchesProperty(arg[0], arg[1]);
+  } else if(str == "[object Function]") {
+    return arg;
+  }
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.dropWhile 
+liuyiliuyi.dropWhile =
+
+function dropWhile(array, predicate) {
+  var a = liuyiliuyi.judge(predicate);
+  for(i = 0; i < array.length; i++) {
+    if(a(array[i]) == false) {
+      array.splice(0, i);
+      return array;
+    }
+  }
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
