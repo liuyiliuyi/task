@@ -754,6 +754,18 @@ function sortedUniq(array) {
 
 
 liuyiliuyi.sortedUniqBy =
+ 
+  function sortedUniqBy(array, iteratee) {
+    var new_arr = [];
+    return array.filter(a => {
+      if(new_arr.indexOf(iteratee(a)) == -1) {
+        new_arr.push(iteratee(a));
+        return true;
+      } else {
+        return false;
+      }
+    })
+  }
 
 // function sortedUniqBy(array, iteratee) {
 //   var new_array.map(iteratee).reduce((a, b) => a.indexOf(b) == -1 ? a.concat(b) : a, [])
@@ -766,19 +778,29 @@ liuyiliuyi.sortedUniqBy =
 
 liuyiliuyi.tail =
 
-function tail() {}
+function tail(array) {
+  return array.slice(1);
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.take
+liuyiliuyi.take =
+
+function take(array, n = 1) {
+  return array.slice(0, n)
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.takeRight
+liuyiliuyi.takeRight =
+
+function takeRight(array, n = 1) {
+  return array.slice(array.length - n);
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
