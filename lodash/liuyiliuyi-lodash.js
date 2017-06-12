@@ -871,10 +871,11 @@ function unionWith(...arg) {
   var result = [];
   arr.forEach(x => {
     for(var i = 0; i < result.length; i++) {
-      if(!comparator(result[i], x)) {
-        result.push(x);
+      if(comparator(result[i], x)) {
+        return;
       }
     }
+      result.push(x);
   })
   return result;
 }
@@ -905,13 +906,30 @@ function uniqBy(array, iteratee) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.uniqWith
+liuyiliuyi.uniqWith = 
+
+function uniqWith(array, comparator) {
+  var result = [];
+  array.forEach(x => {
+    for(var i = 0; i < result.length; i++) {
+      if(comparator(result[i], x)) {
+        return;
+      }
+    }
+      result.push(x);
+  })
+  return result;
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.unzip
+liuyiliuyi.unzip =
+
+function unzip(array) {
+
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -947,13 +965,26 @@ liuyiliuyi.xorWith
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.zip
+liuyiliuyi.zip =
+
+function zip(...arg) {
+  //Array.from(arg)
+  return arg[0].map((x, i) => arg.reduce((x, y) => x.concat(y[i]), []));
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.zipObject
+liuyiliuyi.zipObject =
+
+function zipObject(props, values) {
+  var obj = {}
+  for(let i = 0; i < props.length; i++) {
+    obj[props[i]] = values[i];
+  }
+  return obj;
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
