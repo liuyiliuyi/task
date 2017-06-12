@@ -963,8 +963,22 @@ liuyiliuyi.xor =
 
 function xor(...arg) {
   var array = Array.from(arg);
-  return Array.from(new Set([].concat(...array.map((x) => Array.from(new Set(x))))));
+  var arr = [].concat(...array.map((x) => Array.from(new Set(x))));
+  var result = [];
+  var map = new Map();
+  for(let value of arr) {
+    if(map.get(value) == undefined) {
+      map.set(value, 1);
+    } else {var val = map.get(value); map.set(value, ++val);} 
+  }
+  for(let value of arr) {
+    if(map.get(value) == 1) {
+      result.push(value);
+    }
+  }
+  return result;
 }
+  
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -991,17 +1005,24 @@ liuyiliuyi.xorWith =
 function xorWith(...arg) {
   var array = Array.from(arg);
   var comparator = array.pop();
-  var arr = [].concat(...array.map(x => liuyiliuyi.uniqBy(x, comparator)));
+  var arr = [].concat(...(array.map(x => _.uniqBy(x, comparator))));
   var result = [];
+  var new_arr = [];
+  var amount = 0;
   for(var i = 0; i < arr.length; i++) {
-    for(var j = 0; j < arr.length; j++) {
-      if(comparator(arr[i], arr[j]) && i != j) {
-        break;
+    for(var j = i + 1; j < arr.length; j++) {
+      if(comparator(arr[i], arr[j])) {
+        new_arr.push(i,y);
       }
     }
-    result.push(arr[i]);
   }
-  return result;
+  var arr2 = Array.from(new Set(new_arr)).sort();
+  
+  for(var i = 0; i < arr2.length; i++) {
+    arr.splice(arr2[i] - amount, 1);
+    amount++;
+  }
+  return arr;
 }
 
 
