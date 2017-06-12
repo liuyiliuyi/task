@@ -799,7 +799,7 @@ function take(array, n = 1) {
 liuyiliuyi.takeRight =
 
 function takeRight(array, n = 1) {
-  return array.slice(-n);
+  return n == 0 ? [] : array.slice(-n);
 }
 
 
@@ -823,7 +823,7 @@ function takeRightWhile(array, ...predicate) {
 
 liuyiliuyi.takeWhile = 
 
-function takeWhile(array, predicate) {
+function takeWhile(array, ...predicate) {
     var a = liuyiliuyi.judge.apply(null, predicate);
   for(var i = 0; i < array.length; i++) {
     if(a(array[i]) == false) {
@@ -840,7 +840,7 @@ function takeWhile(array, predicate) {
 liuyiliuyi.union = 
 
 function union(array) {
-  
+
 }
 
 
