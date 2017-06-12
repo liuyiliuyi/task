@@ -827,7 +827,7 @@ function takeWhile(array, ...predicate) {
     var a = liuyiliuyi.judge.apply(null, predicate);
   for(var i = 0; i < array.length; i++) {
     if(a(array[i]) == false) {
-      array.splice(i + 1);
+      array.splice(i);
       return array;
     }
   }
@@ -835,37 +835,71 @@ function takeWhile(array, ...predicate) {
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+sortedIndex([30, 50], 40)  => index;
 
 liuyiliuyi.union = 
 
-function union(array) {
-
+function union(...array) {
+  return  [].concat(...array).reduce((a, b) => a.indexOf(b) == -1 ? a.concat(b) : a, []);
 }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.unionBy
+liuyiliuyi.unionBy =
+
+function unionBy(...arg) {
+  var array = Array.from(arg);
+  var iteratee = array.pop();
+  var a = liuyiliuyi.judge(iteratee);
+  var arr = [].concat(...array);
+  var new_arr = [];
+  return arr.reduce((x, y) => {if(new_arr.indexOf(a(y)) == -1) {new_arr.push(a(y));return x.concat(y);} else return x}, []);
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.unionWith
+liuyiliuyi.unionWith = 
+
+function unionWith(...arg) {
+  var array = Array.from(arg);
+  var comparator = array.pop();
+  var arr = [].concat(...array);
+  var result = [];
+  arr.forEach(x => {
+    for(var i = 0; i < result.length; i++) {
+      if(!comparator(result[i], x)) {
+        result.push(x);
+      }
+    }
+  })
+  return result;
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.uniq
+liuyiliuyi.uniq =
+
+function uniq(array) {
+  return array.reduce((x, y) => x.indexOf(y) == -1 ? x.concat(y) : x, [])
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.uniqBy
+liuyiliuyi.uniqBy = 
+
+function uniqBy(array, iteratee) {
+  var a = liuyiliuyi.judge(iteratee);
+  var arr = [];
+  return array.reduce((x, y) => {if(arr.indexOf(a(y)) == -1) {arr.push(a(y)); return x.concat(y)} else return x}, []);
+} 
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
