@@ -962,21 +962,47 @@ function without(...arg) {
 liuyiliuyi.xor = 
 
 function xor(...arg) {
-  var array = [].concat(...arg);
-
+  var array = Array.from(arg);
+  return Array.from(new Set([].concat(...array.map((x) => Array.from(new Set(x))))));
 }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.xorBy
+liuyiliuyi.xorBy =
+
+function xorBy(...arg) {
+  var array = Array.from(arg);
+  var iteratee = array.pop();
+  var f = liuyiliuyi.judge(iteratee);
+  var arr = [].concat(...array.map((m) => {var a = []; return m.reduce((x, y) => {if(a.indexOf(f(y)) == -1) {a.push(f(y)); return x.concat(y);} else return x;}, [])}));
+  var b = [];
+  var ary = arr.map(x => f(x));
+  return arr.reduce((x, y) => {if(ary.indexOf(f(y)) == ary.lastIndexOf(f(y))) {return x.concat(y)} else return x;}, []);
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.xorWith
+liuyiliuyi.xorWith =
+
+function xorWith(...arg) {
+  var array = Array.from(arg);
+  var comparator = array.pop();
+  var arr = [].concat(...array.map(x => liuyiliuyi.uniqBy(x, comparator)));
+  var result = [];
+  for(var i = 0; i < arr.length; i++) {
+    for(var j = 0; j < arr.length; j++) {
+      if(comparator(arr[i], arr[j]) && i != j) {
+        break;
+      }
+    }
+    result.push(arr[i]);
+  }
+  return result;
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
