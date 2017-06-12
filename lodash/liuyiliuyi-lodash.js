@@ -799,26 +799,49 @@ function take(array, n = 1) {
 liuyiliuyi.takeRight =
 
 function takeRight(array, n = 1) {
-  return array.slice(array.length - n);
+  return array.slice(-n);
 }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.takeRightWhile
+liuyiliuyi.takeRightWhile =
+
+function takeRightWhile(array, ...predicate) {
+  var a = liuyiliuyi.judge.apply(null, predicate);
+  for(var i = array.length - 1; i >= 0; i--) {
+    if(a(array[i]) == false) {
+      return array.splice(i + 1);
+    }
+  }
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.takeWhile
+liuyiliuyi.takeWhile = 
+
+function takeWhile(array, predicate) {
+    var a = liuyiliuyi.judge.apply(null, predicate);
+  for(var i = 0; i < array.length; i++) {
+    if(a(array[i]) == false) {
+      array.splice(i + 1);
+      return array;
+    }
+  }
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.union
+liuyiliuyi.union = 
+
+function union(array) {
+  
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
