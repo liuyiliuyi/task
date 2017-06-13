@@ -942,7 +942,8 @@ function unzipWith(array, iteratee) {
 }
 
 function unzipWith(array, iteratee) {
-  return array[0].map((a, i) => array.reduce((x, y) => iteratee(x, y[i])));
+  var arr = unzip(array);
+  return array[0].map((a, i) => arr[i].reduce(iteratee));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1005,14 +1006,14 @@ liuyiliuyi.xorWith =
 function xorWith(...arg) {
   var array = Array.from(arg);
   var comparator = array.pop();
-  var arr = [].concat(...(array.map(x => _.uniqBy(x, comparator))));
+  var arr = [].concat(...(array.map(x => _.uniqWith(x, comparator))));
   var result = [];
   var new_arr = [];
   var amount = 0;
   for(var i = 0; i < arr.length; i++) {
     for(var j = i + 1; j < arr.length; j++) {
       if(comparator(arr[i], arr[j])) {
-        new_arr.push(i,y);
+        new_arr.push(i,j);
       }
     }
   }
