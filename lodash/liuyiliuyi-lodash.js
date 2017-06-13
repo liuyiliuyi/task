@@ -202,6 +202,8 @@ function judge(arg) {
     return _.matchesProperty(arg[0], arg[1]);
   } else if(str == "[object Function]") {
     return arg;
+  } else if(str == "[object RegExp]") {
+    return x => x;
   }
 }
 
@@ -938,7 +940,7 @@ function unzip(array) {
 liuyiliuyi.unzipWith = 
 
 function unzipWith(array, iteratee) {
-  var arr = unzip(array);
+  var arr = liuyiliuyi.unzip(array);
   return array[0].map((a, i) => arr[i].reduce(iteratee));
 }
 
@@ -1196,13 +1198,25 @@ function find(collection, iteratee, fromIndex = 0) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.findLast
+liuyiliuyi.findLast =
+
+function find(collection, iteratee, fromIndex = 0) {
+  var f = liuyiliuyi.judge(iteratee);
+  for(var i = fromIndex; i >= 0; i--) {
+    if(f(collection[i], i, collection) == true) {
+      return collection[i];
+    }
+  }
+  return undefined;
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.flatMap
+liuyiliuyi.flatMap =
+
+function flatMap() {}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3315,7 +3329,7 @@ liuyiliuyi.uniqueId
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+/*
 
 
 liuyiliuyi.VERSION
@@ -3329,7 +3343,7 @@ liuyiliuyi.templateSettings
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/*
+
 liuyiliuyi.templateSettings.escape
 
 
