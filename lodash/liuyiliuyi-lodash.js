@@ -203,7 +203,7 @@ function judge(arg) {
   } else if(str == "[object Function]") {
     return arg;
   } else if(str == "[object RegExp]") {
-    return x => x;
+    return Boolean;
   }
 }
 
@@ -1200,7 +1200,7 @@ function find(collection, iteratee, fromIndex = 0) {
 
 liuyiliuyi.findLast =
 
-function find(collection, iteratee, fromIndex = 0) {
+function findLast(collection, iteratee, fromIndex = collection.length - 1) {
   var f = liuyiliuyi.judge(iteratee);
   for(var i = fromIndex; i >= 0; i--) {
     if(f(collection[i], i, collection) == true) {
@@ -1216,49 +1216,113 @@ function find(collection, iteratee, fromIndex = 0) {
 
 liuyiliuyi.flatMap =
 
-function flatMap() {}
+function flatMap(collection, iteratee) {
+  var f = liuyiliuyi.judge(iteratee);
+  var result = [];
+  for(i in collection) {
+    result = result.concat(f(collection[i]));
+  }
+  return result;
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.flatMapDeep
+liuyiliuyi.flatMapDeep =
+
+function flatMapDeep(collection, iteratee) {
+  return liuyiliuyi.flattenDeep(liuyiliuyi.flatMap(collection, iteratee));
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.flatMapDepth
+liuyiliuyi.flatMapDepth = 
+
+function flatMapDepth(collection, iteratee) {
+  return liuyiliuyi.flattenDepth(liuyiliuyi.flatMap(collection, iteratee))
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.forEach
+liuyiliuyi.forEach =
+
+function forEach(collection, iteratee) {
+  var f = liuyiliuyi.judge(iteratee);
+  for(i in collection) {
+    if(f(collection[i], i, collection) == false) break;
+  }
+  return collection;
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.forEachRight
+liuyiliuyi.forEachRight =
+
+function forEachRight(collection, iteratee) {
+  var f = liuyiliuyi.judge(iteratee);
+  if(Array.isArray(collection) === true) collection.reverse();
+  for(i in collection) {
+    if(f(collection[i], i, collection) == false) break;
+  }
+  return collection.reverse();
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.groupBy
+liuyiliuyi.groupBy =
+
+function groupBy(collection, iteratee) {
+  var obj = {};
+  var f = liuyiliuyi.judge(iteratee);
+  for(i in collection) {
+    if(f(collection[i]) in obj) {
+      obj[f(collection[i])].push(collection[i]);
+    } else {
+      obj[f(collection[i])] = [collection[i]];
+    }
+  }
+  return obj;
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.includes
+liuyiliuyi.includes =
+
+function includes(collection, value, fromIndex = 0) {
+  if(Object.prototype.toString.call(collection) == "[object Object]") {
+    for(key in collection) {
+      if(collection[key] == value) {
+        return true;
+      }
+    }
+  } else {
+    return collection.indexOf(value, fromIndex) == -1 ? false : true;
+  }
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.invokeMap
+liuyiliuyi.invokeMap =
+
+function invokeMap(collection, path, args) {
+  
+  for(key in collection) {
+
+  }
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

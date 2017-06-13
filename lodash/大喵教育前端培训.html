@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<!-- saved from url=(0042)http://xieranmaya.coding.me/lodash-tester/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <title>大喵教育前端培训</title>
+  <meta name="viewport" content="width=1440">
+  <link rel="stylesheet" href="./大喵教育前端培训_files/default.min.css">
+  <link rel="stylesheet" href="./大喵教育前端培训_files/monokai-sublime.css">
+  <link rel="stylesheet" href="./大喵教育前端培训_files/tester.css">
+  <style>
+    .core-fns {
+      background-color: aqua;
+    }
+  </style>
+  <script src="https://hm.baidu.com/hm.js?2243d09d24f5e80836f6b9d3a08d9fb0"></script><script src="./大喵教育前端培训_files/lodash.min.js"></script>
+  <script>
+    function getImplementerNameFromUrl(url) {
+      var parts = url.split('/')
+      var fileName = parts[parts.length - 1]
+      var customLodashName = fileName.split('-')[0]
+      return customLodashName
+    }
+    function getImplementerNameFromUrl2(url) {
+      return url.split('//')[1].split('.')[0]
+      return customLodashName
+    }
+    function getNickName(url) {
+      var nickName = url.match(/\/\/(.*?)\//)[1]
+      if (nickName)
+        return nickName
+      else
+        return getImplementerNameFromUrl(url)
+    }
+    var project = location.search.substr(1)
+    if (!project) {
+      project = 'lodash'
+    }
+  </script>
+  <script>
+    var usernames = [
+   
+      ['liuyiliuyi', '蔡万东'],
+    ]
+    var implementations = [
+      {
+        // url: `https://dongliang1993.github.io/DongLiang-${project}.js`,
+      }, {
+        url: `https://jeane-zz.github.io/ZhangDZ-${project}.js`,
+      }, {
+        url: `https://grassrootscoder.github.io/TianXiaoBo-${project}.js`,
+      }, {
+        // url: `https://guanyubeing.github.io/GuanYu-${project}.js`,
+      }, {
+        // url: `https://alisa666.github.io/Gebin-${project}.js`,
+      }, {
+        url: `https://linlekai.github.io/LinLeKai-${project}.js`,
+      }, {
+        // url: `https://wangyulong666.github.io/WangYuLong-${project}.js`,
+      }, {
+        // url: `https://li-z.github.io/LiZhi-${project}.js`,
+      }, {
+        url: `https://incisa.github.io/my-lodash/YuLei-${project}.js`,
+      }, {
+        // url: `https://julywz.github.io/my-lodash/WuFang-${project}.js`,
+      }, {
+        url: `https://iotgtkol.github.io/LiuWei-${project}.js`,
+      }, {
+        // url: `https://jianglinghao.github.io/JiangLingHao-${project}.js`,
+      }, {
+        // url: `https://titancx.github.io/CaiQinChen-${project}.js`,
+      }, {
+        url: `https://wuyinlong.github.io/WuYinLong-${project}.js`,
+      }, {
+        url: `https://moolan-d.github.io/SunGaoJie-${project}.js`,
+      }, {
+        url: `https://nostalgia0320.github.io/GuoJunChao-${project}.js`,
+      }, {
+        url: `https://zhuangfeilong.github.io/ZhuangFeiLong-${project}.js`,
+      }, {
+        url: `https://gaogao-li.github.io/LiGaoWei-${project}.js`,
+      }, {
+        // url: `https://shenxiaobai.github.io/ShenXiaoBai-${project}.js`,
+      }, {
+        url: `https://theworld1992.github.io/WangYaWei-${project}.js`,
+      }, {
+        url: `https://therunwolf.github.io/ShiFangHong-${project}.js`,
+      }, {
+        url: `https://gongqiyi.github.io/FangTianYi-${project}.js`,
+      }, {
+        // url: `demo/XieDaMiao-${project}.js`,//线下测试用的
+      }
+    ]
+
+
+    implementations = usernames.map(it => {
+      return {url: `http://192.168.31.109:8000/liuyiliuyi-lodash.js`}
+    })
+
+
+
+    // implementations = usernames.map(it => {
+    //   return {
+    //     url: `http://${it[0]}.coding.me/task/${project}/${it[0].toLowerCase()}-${project}.js`
+    //   }
+    // })
+    // .filter(it=>it.url)//过滤出有提供url的部分，这样比较好删一些
+    // // .filter(it=>it.url.indexOf('XieDaMiao')>0)//用于调bug时把人数降为1
+    // .sort((a, b) => {//按姓名拼音序排序
+    //   return getImplementerNameFromUrl(a.url).toLowerCase() > getImplementerNameFromUrl(b.url).toLowerCase() ? 1 : -1
+    // })
+
+
+
+
+    // implementations.unshift({url: `https://xieranmaya.github.io/fe-training/projects/lodash-tester/demo/XieDaMiao-${project}.js`})
+  </script>
+  <script>
+    var coreFns = [
+      'keyBy','chunk','pull','fromPairs','fill','isNil','ceil','round',
+      'get','set',
+      'assignIn',
+      'before',
+      'bind',
+      'chain',
+      'clone',
+      'compact',
+      'concat',
+      'create',
+      'defaults',
+      'defer',
+      'delay',
+      'each',
+      'escape',
+      'every',
+      'filter',
+      'find',
+      'flatten',
+      'flattenDeep',
+      'forEach',
+      'has',
+      'head',
+      'identity',
+      'indexOf',
+      'isArguments',
+      'isArray',
+      'isBoolean',
+      'isDate',
+      'isEmpty',
+      'isEqual',
+      'isFinite',
+      'isFunction',
+      'isNaN',
+      'isNull',
+      'isNumber',
+      'isObject',
+      'isRegExp',
+      'isString',
+      'isUndefined',
+      'iteratee',
+      'keys',
+      'last',
+      'map',
+      'matches',
+      'max',
+      'min',
+      'mixin',
+      'negate',
+      'noConflict',
+      'noop',
+      'once',
+      'pick',
+      'reduce',
+      'result',
+      'size',
+      'slice',
+      'some',
+      'sortBy',
+      'tap',
+      'thru',
+      'toArray',
+      'uniqueId',
+      'values',
+    // ]
+
+    // var underscoreFns = [
+      "each",
+      "map",
+      "reduce",
+      "reduceRight",
+      "find",
+      "filter",
+      "where",
+      "findWhere",
+      "reject",
+      "every",
+      "some",
+      "contains",
+      "invoke",
+      "pluck",
+      "max",
+      "min",
+      "sortBy",
+      "groupBy",
+      "indexBy",
+      "countBy",
+      "shuffle",
+      "sample",
+      "toArray",
+      "size",
+      "partition",
+      "first",
+      "initial",
+      "last",
+      "rest",
+      "compact",
+      "flatten",
+      "without",
+      "union",
+      "intersection",
+      "difference",
+      "uniq",
+      "zip",
+      "unzip",
+      "object",
+      "indexOf",
+      "lastIndexOf",
+      "sortedIndex",
+      "findIndex",
+      "findLastIndex",
+      "range",
+      "bind",
+      "bindAll",
+      "partial",
+      "memoize",
+      "delay",
+      "defer",
+      "throttle",
+      "debounce",
+      "once",
+      "after",
+      "before",
+      "wrap",
+      "negate",
+      "compose",
+      "keys",
+      "allKeys",
+      "values",
+      "mapObject",
+      "pairs",
+      "invert",
+      "create",
+      "functions",
+      "findKey",
+      "extend",
+      "extendOwn",
+      "pick",
+      "omit",
+      "defaults",
+      "clone",
+      "tap",
+      "has",
+      "matcher",
+      "property",
+      "propertyOf",
+      "isEqual",
+      "isMatch",
+      "isEmpty",
+      "isElement",
+      "isArray",
+      "isObject",
+      "isArguments",
+      "isFunction",
+      "isString",
+      "isNumber",
+      "isFinite",
+      "isBoolean",
+      "isDate",
+      "isRegExp",
+      "isError",
+      "isNaN",
+      "isNull",
+      "isUndefined",
+      "noConflict",
+      "identity",
+      "constant",
+      "noop",
+      "times",
+      "random",
+      "mixin",
+      "iteratee",
+      "uniqueId",
+      "escape",
+      "unescape",
+      "result",
+      "now",
+      "template",
+      "chain",
+      "value",
+    ]
+  </script>
+  <script type="" data-comment="人肉整理的测试数据">
+    var testCasesByHand = {
+      map: [
+        [[1, 2, 3], function(v,i,o) {return v+i+o.length*2}],
+        [[1, 2, 3, 4, 5], function(v,i,o) {return (v+i)%2==0}],
+      ],
+      filter: [
+        [[1,2,3,4,5,6], function(x) {return x % 3 == 0}],
+        ['the quick brown fox jumps over the lazy dog'.split(' '), function(s) {return s.length > 4}],
+      ],
+      partition: [
+        [[1,2,3,4,5,6,7,8,9,10,11], (x)=>{if (x==2||x==3||x==5||x==7||x==11) {return true} else {return false}}],
+      ],
+      every: [
+        [[true, 1, null, 'yes'], Boolean],
+      ],
+      some: [
+        [[true, 1, null, 'yes'], Boolean],
+      ],
+      reject: [
+        [[1,2,3,4,5,6], function(x) {return x % 3 == 0}],
+        ['the quick brown fox jumps over the lazy dog'.split(' '), function(s) {return s.length > 4}],
+      ],
+      reduce: [
+        [[1,2,3,4,5,6,7], function(a,b){return a+b}, 100],
+        [[1,2,3,4,5,6,7], function(a,b){return a+b}],
+      ],
+      includes: [
+        [[1, 2, 3, 4, 5, 6, 7, 5], 3, 5],
+      ],
+      groupBy: [
+        [[1.3, 2.1, 2.4], function(num){ return Math.floor(num) }],
+        [['one', 'two', 'three'], 'length'],
+      ],
+      keyBy: [
+        [[{name: 'moe', age: 40}, {name: 'larry', age: 50}, {name: 'curly', age: 60}], 'age'],
+        [[{name: 'moe', age: 40}, {name: 'larry', age: 50}, {name: 'curly', age: 60}], 'age'],
+      ],
+      at: [
+        [{ 'a': [{ 'b': { 'c': 3 } }, 4] }, ['a[0].b.c', 'a[1]']],
+      ],
+      has: [
+        [{ 'a': { 'b': 2 } }, 'a.b']
+      ],
+      invert: [
+        [{ 'a': 1, 'b': 2, 'c': 1 }]
+      ],
+      ceil: [
+        [4.006],
+        [6.004, 2],
+        [6040, -2],
+      ],
+      chunk: [
+        [['a', 'b', 'c', 'd'], 2],
+        [['a', 'b', 'c', 'd'], 3],
+      ],
+      compact: [
+        [[0, 1, false, 2, '', 3]],
+        [[1, 0, false, '', NaN]],
+      ],
+      concat: [
+        [[1], 2, [3], [[4]]],
+      ],
+      difference: [
+        [[2, 1], [2, 3]],
+        [[1,2,3,4], [2,3,4,5]],
+      ],
+      drop: [
+        [[1, 2, 3], 5],
+        [[1, 2, 3]],
+      ],
+      dropRight: [
+        [[1, 2, 3], 5],
+        [[1, 2, 3]],
+      ],
+      fill: [
+        [[4, 6, 8, 10], '*', 1, 3],
+        [Array(3), 2],
+        [[1, 2, 3], 'a'],
+      ],
+      flatten: [
+        [[1, [2, [3, [4]], 5]]],
+      ],
+      flattenDeep: [
+        [[1, [2, [3, [4]], 5, [6, [7,8]]]]],
+      ],
+      fromPairs: [
+        [[['a', 1], ['b', 2]]],
+      ],
+      head: [
+        [[1, 2, 3]],
+      ],
+      indexOf: [
+        [[1, 2, 1, 2], 2],
+        [[1, 2, 1, 2], 2, 2]
+      ],
+      initial: [
+        [[1, 2, 3]]
+      ],
+      intersection: [
+        [[2, 1], [2, 3]]
+      ],
+      join: [
+        [['a', 'b', 'c'], '~'],
+        [[1, 2, 3], 4]
+      ],
+      last:[
+        [[1, 2, 3]]
+      ],
+      lastIndexOf: [
+        [[1, 2, 1, 2], 2, 2]
+      ],
+      nth: [
+        [['a', 'b', 'c', 'd'], -2]
+      ],
+      pull: [
+        [['a', 'b', 'c', 'a', 'b', 'c'], 'a', 'c']
+      ],
+      pullAll: [
+        [['a', 'b', 'c', 'a', 'b', 'c'], ['a', 'c']]
+      ],
+      pullAt: [
+        [['a', 'b', 'c', 'd'], [1, 3]]
+      ],
+      reverse: [
+        [[1, 2, 3]]
+      ],
+      sortedIndex: [
+        [[30, 50], 40],
+        [[1,2,2,2,2,3], 2]
+      ],
+      tail: [
+        [[1, 2, 3]]
+      ],
+      take: [
+        [[1, 2, 3], 5]
+      ],
+      takeRight: [
+        [[1,2,3,4], 2]
+      ],
+      union: [
+        [[2], [1, 2], [3, 4]]
+      ],
+      uniq: [
+        [[2, 1, 2, 1, 3, 'a', 'a', 'b']]
+      ],
+      unzip: [
+        [[['a', 1, true], ['b', 2, false]]]
+      ],
+      zip: [
+        [['a', 'b'], [1, 2], [true, false]]
+      ],
+      without: [
+        [[2, 1, 2, 3], 1, 2]
+      ],
+      xor: [
+        [[2, 1], [2, 3]]
+      ],
+      get: [
+        [{a:{b:[1,2,[3,4,[{foo:42},6]]]}}, 'a.b[2][2][0].foo']
+      ],
+      // 以下为字符串相关函数的测试数据
+      camelCase: [
+        ['Foo Bar'],
+        ['--foo-bar--'],
+        ['__FOO_BAR__']
+      ],
+      capitalize: [
+        ['FRED']
+      ],
+      endsWith: [
+        ['abc', 'c'],
+        ['abc', 'b'],
+        ['abc', 'b', 2]
+      ],
+      escape: [
+        ['fred, barney, & pebbles']
+      ],
+      escapeRegExp: [
+        ['[lodash](https://lodash.com/)']
+      ],
+      kebabCase: [
+        ['Foo Bar'],
+        ['fooBar'],
+        ['__FOO_BAR__']
+      ],
+      lowerCase: [
+        ['--Foo-Bar--'],
+        ['fooBar'],
+        ['__FOO_BAR__']
+      ],
+      lowerFirst: [
+        ['Fred'],
+        ['FRED']
+      ],
+      pad: [
+        ['abc', 8],
+        ['abc', 8, '_-'],
+        ['abc', 3]
+      ],
+      padEnd: [
+        ['abc', 6],
+        ['abc', 6, '_-'],
+        ['abc', 3]
+      ],
+      padStart: [
+        ['abc', 6],
+        ['abc', 6, '_-'],
+        ['abc', 3]
+      ],
+      parseInt: [
+        ['08']
+      ],
+      repeat: [
+        ['*', 3],
+        ['abc', 2],
+        ['abc', 0]
+      ],
+      replace: [
+        ['Hi Fred', 'Fred', 'Barney']
+      ],
+      snakeCase: [
+        ['Foo Bar'],
+        ['fooBar'],
+        ['--FOO-BAR--']
+      ],
+      split: [
+        ['a-b-c', '-', 2]
+      ],
+      startCase: [
+        ['--foo-bar--'],
+        ['fooBar'],
+        ['__FOO_BAR__']
+      ],
+      deburr: [
+        ['déjà vu']
+      ],
+      // 以下为高阶函数人肉测试数据
+      matches: [function(fn) {
+        return fn({a:1})({a:1}) == true
+      }],
+      property: [function(fn) {
+        return fn('name')({name: 'damiao'}) == 'damiao'
+      }],
+      ary: [function(fn) {
+        return fn((a,b,c) => a+b+c, 2)(1,2,3) === 3
+      }],
+      unary: [function(fn) {
+        return fn((a,b) => b)(1,2) === undefined
+      }],
+      negate: [function(fn) {
+        return fn(a => a % 2)(2) === true
+      }],
+      once: [function(fn) {
+        a = fn(a => Math.random())
+        var firstReturn = a()
+        return firstReturn === a()
+      }],
+      spread: [function(fn) {
+        return fn((a,b)=>a+b)([1,2]) === 3
+      }],
+      flip: [function(fn) {
+        return fn((a,b,c) => a+b+c)('a','b','c') === 'cba'
+      }],
+      conforms: [function(fn) {
+        return [{b:1},{b:2},{b:3}].filter(fn({b: (b) => b>=2})).length == 2
+      }],
+      constant: [function(fn) {
+        return fn(8)() === 8
+      }],
+      flow: [function(fn) {
+        var add = (a,b) =>a+b
+        var square = a => a*a
+        var double = x => x*2
+        return fn([add, square, double])(4,6) === 200
+      }],
+      method: [function(fn) {
+        return fn('a.b', 1,2)({a:{b:(x,y) => x+y}}) === 3
+      }],
+      methodOf: [function(fn) {
+        return fn({a:{b:(x,y) => x*y}}, 3,4)('a.b') === 12
+      }],
+      nthArg: [function(fn) {
+        return fn(2)(1,2,3,4,5) === 3
+      }],
+      propertyOf: [function(fn) {
+        return fn([1,2,3])(1) === 2
+      }],
+    }
+  </script>
+  <script type="" data-comment="自动整理的测试用例" src="./大喵教育前端培训_files/auto-test-case.js"></script>
+  <script>
+    //合并人肉整理的测试用例与自动整理的部分
+    _.forOwn(testCasesByHand, function(value, key, obj) {
+      if (key == 'join') {
+        // debugger
+      }
+      if (testCases[key]) {
+        testCases[key] = testCases[key].concat(testCasesByHand[key])
+      } else {
+        testCases[key] = testCasesByHand[key]
+      }
+    })
+  </script>
+  <script type="notrun" data-comment="用于测试时把测试的函数个数降为1">
+    testCases = {
+      filter: testCases.filter
+    }
+  </script>
+  <script type="notrun" data-comment="过滤出需要实现的重要函数">
+    var keyFunctions = [
+      'chunk',
+      'compact',
+      'concat',
+      'difference',
+      'differenceBy',
+      'differenceWith',
+      'drop',
+      'dropWhile',
+      'dropRight',
+      'dropRightWhile',
+      'fill',
+    ]
+  </script>
+  <script type="" data-comment="用于最后修改一下测试数据，比如加入一两个">
+    testCases.arrayToLinkedList = [{
+      input: [[1,2]],
+      output: {
+        next: {
+          value: 1,
+          next: {
+            value: 2,
+            next: null,
+          }
+        }
+      }
+    }, {
+      input: [[]],
+      output: {
+        next: null
+      }
+    }]
+    testCases.parseJson = [{
+      input: [`"true"`],
+      output: "true"
+    }, {
+      input: [`23`],
+      output: 23
+    }, {
+      input: [`[1,2,3]`],
+      output: [1,2,3]
+    }, {
+      input: [`true`],
+      output: true
+    }, {
+      input: [`null`],
+      output: null
+    }, {
+      input: [`{"a":1}`],
+      output: {a:1}
+    }, {
+      input: [`[{"a":1,"b":true},2]`],
+      output: [{a:1,b:true},2]
+    }, {
+      input: [`{"a":[1,2]}`],
+      output: {a:[1,2]}
+    }, {
+      input: [`[[1,2],[3,4]]`],
+      output: [[1,2],[3,4]]
+    }, {
+      input: [`{"a":{"b":3}}`],
+      output: {a:{b:3}}
+    }, ]
+
+    testCases = _.merge(testCases, {
+      "dellTo3355": {
+        description: '输入单词，输出在电话拔号盘上按出这个单词所需要的数字',
+        testData: [{
+          input: ['dell'],
+          output: 3355,
+        }]
+      },
+      "isPrime": {
+        description: '输入n，判断n是否为素数',
+        testData: [{
+          input: [97],
+          output: true,
+        }]
+      },
+      "最大公约数": {
+        description: '输入m和n，输出m和n的最大公约数',
+        testData: [{
+          input: [56, 25],
+          output: 2,
+        }]
+      },
+      "大整数相加": {
+        description: '输入两个代表大整数的数组，输出它们的和，同样用大整数表示',
+        testData: [{
+          input: [[1,1,1,1,1],[9,9,9,9]],
+          output: [2,1,1,1,0]
+        }]
+      },
+      "n-m之间的素数": {
+        description: '输入m和n，输出一个数组包含m和n之间所有的素数，包含m和n',
+        testData: [{
+          input: [2,17],
+          output: [2,3,5,7,11,13,17]
+        }]
+      },
+      "求数组最大项": {
+        description: '输入一个数组，输出其中的最大项',
+        testData: [{
+          input: [[1,2,4,5,6,7,8,9]],
+          output: 9
+        }]
+      },
+      "1-n的和": {
+        description: '输入n，输出1到n的和，包含n',
+        testData: [{
+          input: [100],
+          output: 5050
+        }]
+      },
+      "1-n以内的完全数": {
+        description: '输入n，输出n（包含）以内的所有完全数，放在一个数组里',
+        testData: [{
+          input: [6],
+          output: [6]
+        }]
+      },
+      "abc排序": {
+        description: '输入三个数a，b，c，输出一个数组，包含它们按序排列的结果',
+        testData: [{
+          input: [3,2,5],
+          output: [2,3,5]
+        }]
+      },
+      "fibb": {
+        description: '输入n，输出斐波那契列数第n项的值',
+        testData: [{
+          input: [5],
+          output: 5
+        }]
+      },
+      "isInteger": {
+        description: '输入n，判断n是否为整数',
+        testData: [{
+          input: [1],
+          output: true
+      }, {
+        input: [1.5],
+        output: false
+        }]
+      },
+      "m的n次方": {
+        description: '输入m和n，输出m的n次方',
+        testData: [{
+          input: [2,5],
+          output: 32
+        }]
+      },
+      "Sin-Taylor": {
+        description: '输入x，输出sin(x)的值',
+        testData: [function(fn){
+          return fn(2.5) - Math.sin(2.5) < 0.001
+        }]
+      },
+      "round": {
+        description: '输入n，输出n被四舍五入后的结果',
+        testData: [{
+          input: [1,2],
+          output: 3
+        }]
+      },
+      // "毕达哥拉斯三元组": {
+      //   description: '忘记了',
+      //   testData: [{
+      //     input: [],
+      //     output: []//忘记是多少了
+      //   }]
+      // },
+      // "等差数列前n项和": {
+      //   description: '',
+      //   testData: [{
+      //     input: [1,2],
+      //     output: 3
+      //   }]
+      // },
+      "第一次只出现一次的字符": {
+        description: '输入一个字符串，输出这个字符串中第一次只出现一次的字符',
+        testData: [{
+          input: ['lksdjlfoiejfsdfisdf'],
+          output: 'k'
+        }]
+      },
+      "反向输出一个三位数": {
+        description: '输入一个整数n，输出这个数倒序后的字符串形式',
+        testData: [{
+          input: [3510],
+          output: "0153"
+        }]
+      },
+      "分解质因数": {
+        description: '输入n，输出把n分解成质因数的结果，放在数组中，从小到大放置，例：输入8，输出[2,2,2]',
+        testData: [{
+          input: [8],
+          output: [2,2,2]//TODO
+        }]
+      },
+      "猴子选王": {
+        description: '输入猴子个数m，报数个数n，输出最终为王的猴子',
+        testData: [{
+          input: [10,2],
+          output: 5
+        }]
+      },
+      "评委打分": {
+        description: '输入一个数组表示评委的打分，输出去掉一个最高分去掉一个最低分后的平均分',
+        testData: [{
+          input: [[1,2,3,4,5,6,7,8,9,10]],
+          output: 5.5
+        }]
+      },
+      "敲7": {
+        description: '输入n，输出n（包含）以内所有7的倍数及数位中有7的数，从小到大放在数组中',
+        testData: [{
+          input: [20],
+          output: [7,14,17]
+        }]
+      },
+      "求平方根": {
+        description: '输入n，求n的平方根，不得调用sqrt',
+        testData: [{
+          input: [9],
+          output: 3
+        }]
+      },
+      "日历": {
+        description: '输入年份y，月份m，输出这一年的这一个月的第一天是周几，1表示周一，0表示周日',
+        testData: [{
+          input: [2016,12],
+          output: 4
+        }]
+      },
+      // "扫雷游戏": {
+      //   description: '',
+      //   testData: [{
+      //     input: [1,2],
+      //     output: 3
+      //   }]
+      // },
+      // "数字转换成字符串": {
+      //   description: '',
+      //   testData: [{
+      //     input: [3456],
+      //     output: '3456'
+      //   }]
+      // },
+      // "水仙花数": {
+      //   description: '',
+      //   testData: [{
+      //     input: [1,2],
+      //     output: 3
+      //   }]
+      // },
+      "四舍五入": {
+        description: '输入一个数n，输出它四舍五入后的结果',
+        testData: [{
+          input: [1.4],
+          output: 1
+      }, {
+        input: [1.5],
+        output: 2
+        }]
+      },
+      // "素数判定优化": {
+      //   description: '',
+      //   testData: [{
+      //     input: [1,2],
+      //     output: 3
+      //   }]
+      // },
+      // "随机数与概率算法": {
+      //   description: '',
+      //   testData: [{
+      //     input: [1,2],
+      //     output: 3
+      //   }]
+      // },
+      "向量点积": {
+        description: '输入两个数组表示两个向量，数组的长度表示向量的维度，输出向量的点积',
+        testData: [{
+          input: [[1,2], [3,4]],
+          output: 11
+        }]
+      },
+      "字符串展开": {
+        description: '输入一个字符串，输出把其中省略的字符补上的完整字符串，例：输入a-c，输出abc',
+        testData: [{
+          input: ['a-d'],
+          output: 'abcd'
+        }]
+      },
+      "最小公倍数": {
+        description: '输入两个数，输出它们的最小公倍数',
+        testData: [{
+          input: [1,2],
+          output: 2
+        }]
+      },
+      "最大公约数": {
+        description: '输入两个数，输出它们的最大公约数',
+        testData: [{
+          input: [1,2],
+          output: 1
+        }]
+      },
+      "最小的能被1-n整除的数": {
+        description: '输入n，输出最小的能被1-n整除的数',
+        testData: [{
+          input: [3],
+          output: 6
+        }]
+      },
+    })
+  </script>
+</head>
+<body>
+  <h1>大喵教育前端培训 Lodash 实践项目实时状态</h1>
+  <table border="1" class="result-table">
+    <tbody>
+      <tr>
+        <th><a target="_blank" href="https://lodash.com/docs/" title="点击直达文档首页">函数名</a></th>
+        <script>
+          implementations.map(it => {
+            document.write(`
+              <th title="${getImplementerNameFromUrl(it.url)}">
+              <a target="_blank" href="${it.url}">${getImplementerNameFromUrl(it.url)}</a>
+              </th>
+            `)
+          })
+        </script>
+             
+            
+              <th title="蔡万东">
+              <a target="_blank" href="http://192.168.31.109:8000/liuyiliuyi-lodash.js">liuyiliuyi</a>
+              </th>
+            
+      </tr>
+    </tbody>
+  </table>
+  <table border="1" class="result-table">
+    <tbody id="result-body">
+      <tr>
+        <th>0</th>
+        <script>
+          implementations.map((it, index) => {
+            document.write(`<th>${index+1}</th>`)
+          })
+          </script>
+        </tr>
+        </tbody>
+    </table>
+
+<script src="./大喵教育前端培训_files/jquery-3.1.1.min.js"></script>
+<script src="./大喵教育前端培训_files/beautify.min.js"></script>
+<script src="./大喵教育前端培训_files/esprima.min.js"></script>
+<script src="./大喵教育前端培训_files/tester.js"></script>
+<script>
+$(function() {
+  $(window).on('scroll', _.throttle(function(){
+    if (window.scrollY > 135) {
+      $("table:first-of-type").addClass('show')
+    } else {
+      $("table:first-of-type").removeClass('show')
+    }
+  },100))
+  // debugger
+  var customLodashNames = implementations
+    .filter(it => it.url)
+    .map(it => it.url)
+    .map(getImplementerNameFromUrl)
+
+  console.log(customLodashNames)
+
+  var eagerForImplementationText = [
+    '我在这儿等着你实现呀等着你实现，快来实现我~~~',
+    '快来实现我呀，程序员MM/GG',
+    '再不实现我，就把你的电脑吃掉！',
+    'Hello World!',
+    '现在写的程序，就是以后工资卡上的工资！',
+    '不会写就查文档！！！',
+    '现在不实现我，以后可就没机会了哦~',
+    '没有人来实现我，我好寂寞...',
+    '快来和我玩',
+    '不要等到面试的时候再后悔哦',
+  ]
+
+  Promise.all(implementations.map(it=>it.url).map(loadScript))//加载并执行所有的代码
+    .then(function() {//所有实现都加载完成了
+      var timeout = 0;//让setTimeout顺次执行
+      var timegap = 30;//每个之间的间隔时间，最终就是setTimeout(fn, timeout++*timegap)
+      var customLodashs = customLodashNames.map(name=>window[name])
+      // _.forOwn(_, function(fn, methodName) {// 开始测某一个方法是否正确，按方法在lodash里面出现的顺序测
+      Object.keys(testCases).forEach((methodName, index) => {// 按照testCases里面的顺序测试
+        setTimeout(function() {
+          $('#result-body').append(`
+            <tr>
+              <th class="${coreFns.includes(methodName) ? 'core-fns' : ''}">
+                <a
+                  title="${testCases[methodName].description}"
+                  target="_blank"
+                  href="https://lodash.com/docs/#${methodName}"
+                >
+                  ${methodName}
+                </a>
+              </th>
+            </tr>`)
+        }, timeout++*timegap)
+        new function() {
+          let fn = _[methodName]
+          let testResult//测试结果
+          let customFunctions//所有人自己实现的函数
+          // debugger
+          customFunctions = customLodashNames.map(name=>window[name][methodName])
+          testResult = customFunctions.map((customFunction,index) => {
+            return test(
+              customFunction,//被测试的函数
+              customLodashs[index],//被测试的函数的上下文
+              testCases[methodName],//针对一个函数的多条测试数据
+              _[methodName],//基准函数，以它的返回值为准
+              _//基准函数的上下文，注意这里不是obj，没有多余的逗号。。
+            )
+          })
+          // testResult为某一个函数对所有测试数据的测试结果
+          // console.log(methodName, testResult)
+          setTimeout(function() {
+            var row = testResult.map(result => {
+              //result是某一个人的某一个函数的在不同测试数据下的测试结果集合
+              //为数组，如果为null，则表示未实现
+              if (result) {
+                return {
+                  text: result.map(oneCaseResult => {
+                    if (oneCaseResult.pass === true) {
+                      return `输入：${oneCaseResult.input}\n输出/期望：${oneCaseResult.output}`
+                    } else if (oneCaseResult.type == 'WrongAnswer') {
+                      return `输入：${oneCaseResult.input}\n输出：${oneCaseResult.output}\n期望：${oneCaseResult.expect}`
+                    } else if (oneCaseResult.type == 'SyntaxError') {
+                      return `错误：${oneCaseResult.error}\n`
+                    } else if (oneCaseResult.type == 'InfiniteLoop') {
+                      return `错误：死循环\n输入：${oneCaseResult.input}`
+                    }
+                    return `错误：${oneCaseResult.error}\n输入：${oneCaseResult.input}\n期望：${oneCaseResult.expect}`
+                  }).join('\n=================\n')+`\n\n源码：\n${result[0].source}`,
+                  status: result.every(it => it.pass) ? '通过' : '未通过',
+                  type: result[0].type,
+                  result: result,
+                  passCount: result.filter(it=>it.pass).length,
+                  unpassCount: result.filter(it=>!it.pass).length,
+                }
+              } else {
+                return {
+                  status: '未实现',
+                  text: '未实现',
+                }
+              }
+            }).map(result => {
+              // console.log('result',result)
+              // if (result.type == 'SyntaxError') {
+              //   return `<td class="syntax-error" title="${result[0].result.error}">语法错误</td>`
+              // }
+              if (result.status == '通过') {
+                return `<td class="pass" tabindex="-1" titles="点击可固定代码段">${result.passCount}/${result.unpassCount+result.passCount}<pre style="position:absolute;"><code class="js">${result.text}</code></pre></td>`
+              } else if(result.status == '未通过') {
+                return `<td class="unpass" tabindex="-1" titles="点击可固定代码段">${result.passCount}/${result.unpassCount+result.passCount}<pre style="position:absolute;"><code class="js">${result.text}</code></pre></td>`
+              } else {
+                return `<td class="unimplemented">未实现</td>`
+              }
+            })
+            // console.log('row',row)
+            $('#result-body tr:last-child')
+              .append(row)
+              .find('pre code')
+              .each(function(i, block) {
+                setTimeout(function() {
+                  hljs.highlightBlock(block);
+                }, 2e4)
+              });
+          }, timeout++*timegap)
+        }
+      })
+    })
+})
+
+/**
+ * 从线上下载并将代码保存到localStorage里
+ * @param  {String} src 需要下载的代码的URL
+ * @return {Promise<String>}     反回得到的代码文本内容
+ */
+function getAndSaveCode(src) {
+  return fetch(src).then(it=>it.text()).then(code=>{
+    localStorage[src] = code
+    return code
+  }).catch(e => {
+    var codeName = getImplementerNameFromUrl(src)
+    return `var ${codeName} = {}`
+  })
+}
+
+/**
+ * 加载，检查，并执行代码
+ * @param  {[type]} src [description]
+ * @return {[type]}     [description]
+ */
+function loadScript(src) {
+  return Promise.resolve().then(function(){
+    if (localStorage[src]) {
+      return getAndSaveCode(src)//注释掉这一行即为使用已缓存的代码
+      return localStorage[src]
+    } else {
+      return getAndSaveCode(src)
+    }
+  }).then(code => {
+    var codeName = getImplementerNameFromUrl(src)
+    // code = (code).replace(`var ${codeName}`, `window.${codeName}`)
+    code = infiniteLoopDetector.wrap(code)
+    // console.log(code)
+    window['code' + codeName] = code
+    var globalEval = eval//这么做了是为让eval把代码放在分局作用域执行
+    try {
+      // globalEval(code)//为了性能直接用eval在全局作用域执行代码
+      // return
+      console.time('parse')
+      esprima.parse(code)//如果没有语法错误，这行将会正常走过
+      console.timeEnd('parse')//测试发现这个时间是相当久的，在20ms的数量级
+      runCode(code)
+      if (!window[codeName]) {
+        throw {stack: '格式不对'}
+      }
+      return
+    } catch(e) {
+      // debugger
+      //如果出了错再在这里用esprima解析具体的错误行以便提示，这样就不用每段代码都用esp解析了，TODO
+      var Lodash = {}
+      console.log(e)
+      var syntaxErrorFn = function() {
+        if (e.lineNumber) {
+          throw {
+            type: 'SyntaxError',
+            word: '语法错误',
+            error: `Line ${e.lineNumber}: ${e.description}`,
+            source: code,
+          }
+        } else {
+          throw {
+            type: 'SyntaxError',
+            word: '语法错误',
+            error: `${e.stack}`,
+            source: code,
+          }
+        }
+      }
+      Object.keys(testCases).forEach(methodName => {Lodash[methodName] = syntaxErrorFn})
+      window[codeName] = Lodash
+    }
+  })
+
+  function runCode(code) {
+    //注意这个过程是同步的，所以不需要onload，而且此时已经确认了代码没有语法错误
+    var script = document.createElement('script')
+    script.innerHTML = code
+    document.body.appendChild(script)
+  }
+
+  // return new Promise(function(resolve, reject) {
+  //   var script = document.createElement('script')
+  //   script.src = src
+  //   document.body.appendChild(script)
+  //   script.onload = resolve
+  //   script.onerror = function(e) {
+  //     console.log(e)
+  //     resolve()
+  //   }
+  // })
+}
+</script>
+<script src="./大喵教育前端培训_files/infiniteLoopDetecter.js"></script>
+<script src="./大喵教育前端培训_files/highlight.min.js"></script>
+<script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = (location.protocol == 'file:' ? 'http:' : 'https:') + "//hm.baidu.com/hm.js?2243d09d24f5e80836f6b9d3a08d9fb0";
+    var s = document.getElementsByTagName("script")[0]; 
+    s.parentNode.insertBefore(hm, s); 
+  })();
+</script>
+
+<script>/**
+ * Created by Jarvis on 2017/5/10.
+ */
+</script></body></html>
