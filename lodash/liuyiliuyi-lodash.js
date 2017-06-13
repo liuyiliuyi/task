@@ -1153,8 +1153,9 @@ function eachRight(collection, iteratee) {
 liuyiliuyi.every =
 
 function every(collection, iteratee) {
+  var f = liuyiliuyi.judge(iteratee);
   for(key in collection) {
-    if(iteratee(collection[key], key, collection) === false) {
+    if(f(collection[key], key, collection) === false) {
       return false;
     }
   }
@@ -1169,9 +1170,10 @@ function every(collection, iteratee) {
 liuyiliuyi.filter =
 
 function filter(collection, iteratee) {
+  var f = liuyiliuyi.judge(iteratee);
   var arr = [];
   for(key in collection) {
-    if(iteratee(collection[key], key, collection) == true) {
+    if(f(collection[key], key, collection) == true) {
       arr.push(collection[key]);
     }
   }
