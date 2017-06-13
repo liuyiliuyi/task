@@ -938,10 +938,6 @@ function unzip(array) {
 liuyiliuyi.unzipWith = 
 
 function unzipWith(array, iteratee) {
-  return array[0].map((a, i) => iteratee.apply(null, array.reduce((x, y) => x.concat(y[i], []))))
-}
-
-function unzipWith(array, iteratee) {
   var arr = unzip(array);
   return array[0].map((a, i) => arr[i].reduce(iteratee));
 }
@@ -1185,6 +1181,16 @@ function filter(collection, iteratee) {
 
 
 liuyiliuyi.find = 
+
+function find(collection, iteratee, fromIndex = 0) {
+  var f = liuyiliuyi.judge(iteratee);
+  for(var i = fromIndex; i < collection.length; i++) {
+    if(f(collection[i], i, collection) == true) {
+      return collection[i];
+    }
+  }
+  return undefined;
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
