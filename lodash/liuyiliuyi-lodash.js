@@ -544,14 +544,15 @@ function pullAllWith(array, values, comparator) {
 
 liuyiliuyi.pullAt =
 
-function pullAt(array, ...indexes) {
-  var arr = Array.from(indexes).sort((a, b) => a - b);
+function pullAt(array, indexes) {
+  var arr = indexes.sort((a, b) => a - b);
   var amount = 0;
+  var result = [];
   for(var i = 0; i < arr.length; i++) {
-    array.splice(arr[i] - amount, 1);
+    result.push(...array.splice(arr[i] - amount, 1));
     amount++;
   }
-  return array;
+  return result;
 }
 
 
@@ -1318,41 +1319,102 @@ function includes(collection, value, fromIndex = 0) {
 liuyiliuyi.invokeMap =
 
 function invokeMap(collection, path, args) {
-  
-  for(key in collection) {
+//   var arr = [];
+//   if(Object.prototype.toString.call(path) == "[object String]") {
+//     for(key in collection) {
 
-  }
+//     }
+//   }
+
+//   else{
+//     for(key in collection) {
+//       arr.push(path.call(collection[key]), args); 
+//     }
+//     return arr;
+//   } 
+// }
+  if(typeof path == "string") return collection.map(x => x[path].call(x, args));
+  else if(typeof path == "function") return collection.map(x => path.call(x, args));
 }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.keyBy
+liuyiliuyi.keyBy =
+
+function keyBy(collection, iteratee) {
+  var f = liuyiliuyi.judge(iteratee);
+  var obj = {};
+  collection.forEach(x => obj[f(x)] = x);
+  return obj;
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.map
+liuyiliuyi.map =
+
+function map(collection, iteratee) {
+  var arr = [];
+  var f = liuyiliuyi.judge(iteratee);
+  for(key in collection) {
+    arr.push(f(collection[key], +key, collection))
+  }
+  return arr;
+}
+
+
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.orderBy
+liuyiliuyi.orderBy =
+
+// function orderBy(collection, iteratee, orders) {
+//   for(let i = iteratee.length - 1; i >= 0; i--){
+//     if(order != undefined && orders[i] == "desc") {
+//       collection.sort((a,b) => {if(typeof a[iteratee[i]] == "number") {return a[iteratee[i]] - b[iteratee[i]];} else {return undefined});
+//       collection.reverse();
+//     }
+//     else collection.sort((a,b) => {if(typeof a[iteratee[i]] == "number") return a[iteratee[i]] - b[iteratee[i]] else return undefined});
+//   }
+// }
+
+
+function orderBy(collection, iteratee, orders) {
+  for(let i = iteratee.length - 1; i >= 0; i--){
+      collection.sort((a,b) => {if(typeof a[iteratee[i]] == "number") {return a[iteratee[i]] - b[iteratee[i]]} else {if(a[iteratee[i]] < b[iteratee[i]]) {return -1} else if(a[iteratee[i]] > b[iteratee[i]]) {return 1} else {return 0}}});
+    if(orders != undefined && orders[i] == "desc") {
+      collection.reverse();
+    }
+  }
+  return collection;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+liuyiliuyi.partition = 
+
+function partition(collection, predicate) {
+  var truthy = [], falsey = [];
+  var f = liuyiliuyi.judge(predicate);
+  collection.forEach(x => {if(f(x) == true) truthy.push(x); else if(f(x) == false) falsey.push(x)});
+  return [truthy, falsey];
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.partition
+liuyiliuyi.reduce =
 
+function reduce(collection, predicate) {
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-liuyiliuyi.reduce
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1370,13 +1432,35 @@ liuyiliuyi.reject
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.sample
+liuyiliuyi.sample = 
+
+function sample(collection) {
+  let arr = [];
+  for(key in collection) {
+    arr.push(collection[key]);
+  }
+  let length = arr.length;
+  return arr[Math.random() * length | 0];
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.sampleSize
+liuyiliuyi.sampleSize = 
+
+function sampleSize(collection, n = 1) {
+  let arr = [];
+  let result = [];
+  for(let key in collection) {
+    arr.push(collection[key]);
+  }
+  let length = n > arr.length ? arr.length : n
+  for(let i = 0; i < length; i++) {
+    Array.prototype.push.apply(result,arr.splice(Math.random() * arr.length | 0, 1))
+  }
+  return result;
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1388,7 +1472,12 @@ liuyiliuyi.shuffle
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.size
+liuyiliuyi.size = 
+
+// function size(collection) {
+//   var kind = Object.prototype.toString.call(collection);
+//   if(kind ==)
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1409,7 +1498,12 @@ liuyiliuyi.sortBy
 Date/////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.now
+liuyiliuyi.now = 
+
+function() {
+  var time = new Date();
+  return time.getTime();
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1421,7 +1515,12 @@ Function///////////////////////////////////////////////////////////////////
 liuyiliuyi.after = 
 
 function after(n, func) {
-  
+  if(typeof func != "function") throw new TypeError("Only allowed Function");
+  return function() {
+    if(--n < 1) {
+      return func.apply(this, arguments);
+    } 
+  }
 }
 
 
@@ -1431,15 +1530,42 @@ function after(n, func) {
 liuyiliuyi.ary = 
 
 function ary(func, length) {
-  return 
+  return function(...arg) {
+    arg.length = arg.length > length ? length : arg.length;
+    return func.apply(this, arg);
+  }
 }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.before
+liuyiliuyi.before =
 
+// function before(n, func) {
+//   var last;
+//   return function() {
+//     if(n == 1) {
+//       last = func.apply(this, arguments)
+//     }
+//     if(--n > 0) {
+//       return func.apply(this, arguments)
+//     } else {
+//       return last;
+//     }
+//   }
+// }
+
+
+function before(n, func) {
+  var last;
+  return function() {
+    if(n == 0) last = func.apply(this, arguments);
+    if(--n > 0) {
+      return func.apply(this, arguments)
+    } else return last;
+  }
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
