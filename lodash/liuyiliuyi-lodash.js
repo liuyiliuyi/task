@@ -1952,7 +1952,7 @@ function isDate(value) {
 
 liuyiliuyi.isElement =
 
-function isElement() {
+function isElement(value) {
   return Object.prototype.toString.call(value) == "[object HTMLBodyElement]"
 }
 
@@ -2540,28 +2540,49 @@ function random(lower, upper, floating) {
 
 
 
-
-
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 //Object/////////////////////////////////////////////////
 
 
-liuyiliuyi.assign 
+liuyiliuyi.assign = 
+
+function assign(object, ...source){
+  return source.reduce((a, b) => {
+    for(key in b) {
+      if(b.hasOwnProperty(key)) {
+        a[key] = b[key];
+      }
+    }
+      return a  
+  }, object)
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.assignIn 
+liuyiliuyi.assignIn =
+
+function assignIn(object, ...source){
+  return source.reduce((a, b) => {
+    for(key in b) {
+      a[key] = b[key];
+    }
+    return a  
+  }, object)
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.assignInWith 
+liuyiliuyi.assignInWith =
+
+function assignInWith(object, source ) {}
+
+
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2574,18 +2595,43 @@ liuyiliuyi.assignWith
 
 
 liuyiliuyi.at
- =
+ 
 liuyiliuyi.at
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.create 
+liuyiliuyi.create =
+
+function create(prototype, properties) {
+  //var obj = {}
+  for(key in properties) {
+    prototype[key] = properties[key];
+  }
+  
+  function A() {};
+  A.prototype = prototype;
+  return new A();
+
+  // obj.__proto__ = prototype;
+  // return obj;
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.defaults 
+liuyiliuyi.defaults =
+
+function defaults(object, ...source) {
+  return source.reduce((a, b) => {
+    for(key in b) {
+      if(a[key] == undefined) {
+        a[key] = b[key];
+      }
+    }
+    return a;
+  } ,object)
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2597,21 +2643,39 @@ liuyiliuyi.defaultsDeep
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-//liuyiliuyi.entries.toPairs
+liuyiliuyi.toPairs = 
+
+function toPairs(object) {
+  var arr = [];
+  for(key in b) {
+    if(b.hasOwnProperty(key)) {
+      arr.push([key, arr[key]]);
+    }
+  }
+  return arr;
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/*
 
 
-liuyiliuyi.entriesIn.toPairsIn 
+
+liuyiliuyi.toPairsIn = 
+
+function toPairsIn(object) {
+  var arr = [];
+  for(key in b) {
+      arr.push([key, arr[key]]);
+  }
+  return arr;
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.extend.assignIn
+//liuyiliuyi.extend.assignIn
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2623,43 +2687,122 @@ liuyiliuyi.extendWith
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.findKey
+liuyiliuyi.findKey = 
+
+function findKey(object, predicate) {
+  var f = this.judge(predicate);
+  for(key in object) {
+    if(f(object[key]) == true) {
+      return key;
+    }
+  }
+  return undefined;
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.findLastKey
+liuyiliuyi.findLastKey =
+
+function findLastKey(object, predicate) {
+  var f = this.judge(predicate);
+  var arr = [];
+  for(key in object) {
+    arr.push(key);
+  }
+  for(i = arr.length - 1; i >= 0; i--) {
+    if(f(object[arr[i]]) == true) {
+      return arr[i];
+    }
+  }
+  return undefined;
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.forIn
+liuyiliuyi.forIn =
+
+function forIn(object, iteratee) {
+  var f = this.judge(iteratee);
+  for(key in object) {
+    if(f(object[key], key, object) == false){
+      break;
+    }
+  }
+  return object;
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.forInRight
+liuyiliuyi.forInRight =
+
+function forInRight(object, iteratee) {
+  var f = this.judge(iteratee);
+  var arr = [];
+  for(key in object) {
+    arr.push(key);
+  }
+  for(var i = arr.length - 1; i >= 0; i--) {
+    if(f(object[arr[i]], arr[i]) == false) {
+    }
+  }
+  return object; 
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.forOwn
+liuyiliuyi.forOwn =
+
+function forOwn(object, iteratee) {
+  var f = this.judge(iteratee)
+  for(key in object) {
+    if(object.hasOwnProperty(key)) {
+      if(f(object[key], key) == false) {
+        break;
+      }
+    } 
+  }
+  return object;
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.forOwnRight
+liuyiliuyi.forOwnRight =
+
+function forOwnRight(object, iteratee) {
+  var f = this.judge(iteratee);
+  var arr = [];
+  for(key in object) {
+    if(object.hasOwnProperty(key)) {
+      arr.push(key);
+    }
+  }
+  for(var i = arr.length - 1; i >= 0; i--) {
+    if(f(object[arr[i]], arr[i]) == false) {
+      break;
+    } 
+  }
+  return object;
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.functions
+liuyiliuyi.functions =
+
+function functions(object) {
+
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2689,31 +2832,85 @@ liuyiliuyi.hasIn
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.invert
+liuyiliuyi.invert =
+
+function invert(object) {
+  var arr = [];
+  for(var key in object) {
+    arr.push([object[key], key]);
+  }
+  return arr.reduce((a, b) => {
+                                a[b[0]] = b[1];
+                                return a;
+                              } , {})
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.invertBy
+liuyiliuyi.invertBy =
+
+function invertBy(object, iteratee) {
+  if(arguments.length == 1) {
+    iteratee = a => a;
+  }
+  var f = liuyiliuyi.judge(iteratee);
+  var arr = [];
+  for(var key in object) {
+    arr.push([f(object[key]), key]);
+  }
+  return arr.reduce((a, b) => {if(a[b[0]] == undefined) {
+                                  a[b[0]] = [b[1]]; 
+                                }
+                                else{
+                                  a[b[0]].push(b[1]);
+                                }
+                                return a;
+                              } , {})
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.invoke
+liuyiliuyi.invoke = 
+
+function invoke(object) {
+  
+}
+
+
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.keys
+liuyiliuyi.keys =
+
+function keys(object) {
+  var arr = [];
+  for(key in object) {
+    if(object.hasOwnProperty(key)) {
+      arr.push(key);
+    }
+  }
+  return arr;
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.keysIn
+liuyiliuyi.keysIn =
+
+function keysIn(object) {
+  var arr = [];
+  for(key in object) {
+      arr.push(key);
+  }
+  return arr;  
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2833,8 +3030,8 @@ liuyiliuyi.valuesIn
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-Seq ///////////////////////////////////////////////////
-_
+//Seq ///////////////////////////////////////////////////
+
 
 
 liuyiliuyi.chain
@@ -2854,7 +3051,7 @@ liuyiliuyi.thru
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
+/*
 liuyiliuyi.prototype[Symbol.iterator]
 
 
@@ -2948,7 +3145,6 @@ function capitalize(str) {
 
 
 liuyiliuyi.deburr =
-
 
 
 function deburr(str) {
