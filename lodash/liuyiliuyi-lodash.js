@@ -2015,7 +2015,7 @@ function isFunction(value) {
 liuyiliuyi.isInteger =
 
 function isInteger(value) {
-  return Object.prototype.toString.call(value) == "[object Number]" && (value | 0)  == value;
+  return typeof value == "number" && Math.floor(value) === value && isFinite(value);
 }
 
 
@@ -2132,7 +2132,7 @@ function isObjectLike(value) {
 liuyiliuyi.isPlainObject = 
 
 function isPlainObject(value) {
-  value.constructor == Object || value.__proto__ == null;
+  return value.constructor == Object || value.__proto__ == null;
 }
 
 
@@ -2149,7 +2149,11 @@ function isRegExp(value) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.isSafeInteger
+liuyiliuyi.isSafeInteger =
+
+function isSafeInteger(value) {
+  return liuyiliuyi.isInteger(value) && Math.abs(value) <= Number.MAX_SAFE_INTEGER;
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2185,7 +2189,11 @@ function isSymbol(value) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.isTypedArray
+liuyiliuyi.isTypedArray =
+
+function isTypeArray(value) {
+  return this.kindOf(value) == "[object TypedArray]"
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2201,13 +2209,21 @@ function isUndefined(value) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.isWeakMap
+liuyiliuyi.isWeakMap =
+
+function isWeakMap(value) {
+  return this.kindOf(value) == "[object WeakMap]";
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.isWeakSet
+liuyiliuyi.isWeakSet =
+
+function isWeakSet(value) {
+  return this.kindOf(value) == "[object WeakSet]";
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
