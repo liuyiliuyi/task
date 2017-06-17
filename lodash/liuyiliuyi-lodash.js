@@ -1995,7 +1995,7 @@ function isError(value) {
 liuyiliuyi.isFinite= 
 
 function isFinite(value) {
-  return value == Infinity || value == -Infinity;
+  return Math.abs(value) < infinity && typeof value == "number";
 } 
 
 
@@ -2252,50 +2252,96 @@ function lte(value, other) {
 liuyiliuyi.toArray =
 
 function toArray(value) {
-
+  var arr = [];
+  for(key in value) {
+    arr.push(value[key])
+  }
+  return arr;
 }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.toFinite
+liuyiliuyi.toFinite =
+
+function toFinite(value) {
+  if(value >= 1.7976931348623157e+308) {
+    return 1.7976931348623157e+308;
+  } else if(value <= -1.7976931348623157e+308) {
+    return -1.7976931348623157e+308;
+  } else if(0 < value && value < 5e-324) {
+    return 5e-324;
+  } else if(value < 0 && value > -5e-324) {
+    return -5e-324;
+  } else return parseFloat(value);
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.toInteger
+liuyiliuyi.toInteger =
+
+function toInteger(value) {
+  return Math.floor(this.toFinite(value));
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.toLength
+liuyiliuyi.toLength =
+
+function toLength(value) {
+  return this.toInteger(value) > 4294967295 ? 4294967295 : this.toInteger(value);
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.toNumber
+liuyiliuyi.toNumber =
+
+function toNumber(value) {
+  return Number(value);
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.toPlainObject
+liuyiliuyi.toPlainObject =
+
+function toPlainObject(value) {
+  var obj = {};
+  for(var key in value) {
+    obj[key] = value[key];
+  }
+  return obj;
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.toSafeInteger
+liuyiliuyi.toSafeInteger =
+
+function toSafeInteger(value) {
+  if(value > 9007199254740991) return 9007199254740991;
+  else if(value < -9007199254740991) return -9007199254740991;
+  return this.toInteger(value);
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.toString
+liuyiliuyi.toString =
+
+function toString(value) {
+  return value.toString();
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
