@@ -1995,7 +1995,7 @@ function isError(value) {
 liuyiliuyi.isFinite= 
 
 function isFinite(value) {
-  return Math.abs(value) < infinity && typeof value == "number";
+  return Math.abs(value) < InFinity && typeof value == "number";
 } 
 
 
@@ -2863,32 +2863,69 @@ function forOwnRight(object, iteratee) {
 liuyiliuyi.functions =
 
 function functions(object) {
-
+  var arr = [];
+  for(key in object) {
+    if(object.hasOwnProperty(key) && typeof object[key] == "function")
+    arr.push(key);
+  }
+  return arr;
 }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.functionsIn
+liuyiliuyi.functionsIn =
+
+function functionsIn(object) {
+  var arr = [];
+  for(key in object) {
+    if(typeof object[key] == "function") {
+      arr.push(key);
+    }
+  }
+  return arr;
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.get
+liuyiliuyi.get =
+
+function get(object, path, value) {
+  var path_arr = Array.isArray(path) ? path : path.split("]").join("").split("[").join(".").split(".");
+  return path_arr.reduce((a, b) => {
+    if(a === undefined) {
+      return undefined;
+    }else{return a[b]}}, object) || value;
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.has
+liuyiliuyi.has =
+
+function has(object, path) {
+  var path = Array.isArray(path) ? path : path.split("]").join("").split("[").join(".").split(".");
+  return path.reduce((x, y) => {
+    return x === false ? false : x.hasOwnProperty(y) && x[y];
+  }, object) === false ? false : true;
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.hasIn
+liuyiliuyi.hasIn =
+
+function has(object, path) {
+  var path = Array.isArray(path) ? path : path.split("]").join("").split("[").join(".").split(".");
+  return path.reduce((x, y) => {
+    return x === false || x[y] === undefined ? false : x[y];
+  }, object) === false ? false : true;
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2938,8 +2975,13 @@ function invertBy(object, iteratee) {
 
 liuyiliuyi.invoke = 
 
-function invoke(object) {
-  
+function invoke(object, path, ...args) {
+  path = Array.isArray(path) ? path : path.split("]").join("").split("[").join(".").split(".");
+  if(this.hasIn(object, path) == false){return "Can't read this path."}
+  return args.length == 0 ? path.reduce((x, y) => x[y], object) : path.reduce((x, y, i) => {
+                                                                    if(i == path.length - 1) return x[y](...args);
+                                                                    return x[y];
+                                                                  }, object)
 }
 
 
@@ -3844,7 +3886,13 @@ liuyiliuyi.conforms
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.constant
+liuyiliuyi.constant = 
+
+function constant(value) {
+  return function() {
+    return value;
+  }
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
