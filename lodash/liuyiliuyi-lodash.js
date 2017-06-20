@@ -1,7 +1,7 @@
 var liuyiliuyi = {};
 
 
-Array
+// Array
 
 
 liuyiliuyi.chunk = 
@@ -25,8 +25,6 @@ function chunk(array, size = 1) {
   result.push(store_arr);
   return result;
 } 
-
-
 
 
 
@@ -1703,7 +1701,10 @@ function delay(func, wait, ...args) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.flip
+liuyiliuyi.flip =
+
+function flip() {
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1851,7 +1852,7 @@ liuyiliuyi.eq =
 
 function eq(value, other) {
   if(value != value && other != other) return true;
-  return value == other;
+  return value === other;
 }
 
 
@@ -2002,7 +2003,7 @@ function isError(value) {
 liuyiliuyi.isFinite= 
 
 function isFinite(value) {
-  return Math.abs(value) < InFinity && typeof value == "number";
+  return Math.abs(value) < Infinity && typeof value == "number";
 } 
 
 
@@ -2069,7 +2070,7 @@ liuyiliuyi.isMatchWith
 liuyiliuyi.isNaN =
 
 function isNaN(value) {
-  return value != value;
+  return typeof value === "number" || value instanceof Number && value.toString() === "NaN";
 }
 
 
@@ -2198,8 +2199,8 @@ function isSymbol(value) {
 
 liuyiliuyi.isTypedArray =
 
-function isTypeArray(value) {
-  return this.kindOf(value) == "[object TypedArray]"
+function isTypedArray(value) {
+  return this.kindOf(value) === "[object Uint8Array]";
 }
 
 
@@ -2883,7 +2884,7 @@ function functions(object) {
 }
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 liuyiliuyi.functionsIn =
@@ -3118,7 +3119,16 @@ liuyiliuyi.result
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.set
+liuyiliuyi.set =
+
+function set(object, path, value) {
+  path = Array.isArray(path) ? path : path.split("]").join("").split("[").join(".").split(".");
+  path.reduce((x, y) => {
+
+  }, {})
+
+
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -4138,6 +4148,7 @@ liuyiliuyi.toPath
 
 liuyiliuyi.uniqueId
 
+debugger;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /*
@@ -4183,7 +4194,6 @@ liuyiliuyi.templateSettings.variable
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 
 
 
