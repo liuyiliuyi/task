@@ -2080,7 +2080,7 @@ function isNaN(value) {
 liuyiliuyi.isNative = 
 
 function isNative(value) {
-
+  return value.toString().indexOf(" [native code] ") != -1;
 }
 
 
@@ -3696,7 +3696,10 @@ function split(str, symbol, length) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.startCase 
+liuyiliuyi.startCase =
+function StartCase(str) {
+  return str.replace(/([a-z])(?=[A-Z])/g, "$1 ").replace(/[_ -]+/g, " ").replace(/\b\w/g, a =>a.toUpperCase()).trim();
+}
 
 
 
@@ -3855,11 +3858,38 @@ function trimStart(str, symbol) {
 
 liuyiliuyi.truncate =
 
-function truncate(str, condition_object) {
-
+function truncate(str, condition_object = {}) {
+  var [length, omission, separator] = [condition_object.length || 30, condition_object.omission || "...", condition_object.separator || /(?:)/];
+  var flage = false;
+  var separator_kuo = new RegExp("(" + new RegExp(separator).toString().slice(1, -1) + ")");
+  sep_str = str.split(separator_kuo).reduce((a, b, i) => {
+    if((a + b).length < length) {
+      return a + b;
+    } else {
+      return a;
+    }
+  },"");
+  return str.length > length ? sep_str.substr(0, length - omission.length) + omission : sep_str;   
 }
 
 
+
+function truncate(str, condition_object = {}) {
+  var [length, omission, separator] = [condition_object.length || 30, condition_object.omission || "...", condition_object.separator || /(?:)/];
+  if(str.length > length) {}
+}
+
+
+
+
+
+// function truncate(str, condition_object = {length: 30, omission: "...", separator: /./}) {
+//   var first_str = str.substr(0, length - condition_object.omission.length);
+//   var re = new RegExp(condition_object.separator, "g");
+//   var match_arr = first_str.match(re);
+//   result = match_arr ? first_str.slice(0, first_str.lastIndexOf(match_arr[match_arr.length - 1]) + 1) : first_str;
+//   return 
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
