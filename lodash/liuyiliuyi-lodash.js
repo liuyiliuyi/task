@@ -3802,20 +3802,22 @@ function trim(str, symbol) {
 }
 */
 
-function trim(str, symbol) {
-  symbol = symbol ? symbol : "  　";
-  var input_symbol = symbol;
-  var input_str_arr = str.split("");
-  while(input_symbol.indexOf(input_str_arr[0]) != -1){
-    input_str_arr.shift();
-  }
-  while(input_symbol.indexOf(input_str_arr[input_str_arr.length - 1]) != -1){
-    input_str_arr.pop();
-  }
-  return input_str_arr.join("");  
+// function trim(str, symbol) {
+//   symbol = symbol ? symbol : "  　";
+//   var input_symbol = symbol;
+//   var input_str_arr = str.split("");
+//   while(input_symbol.indexOf(input_str_arr[0]) != -1){
+//     input_str_arr.shift();
+//   }
+//   while(input_symbol.indexOf(input_str_arr[input_str_arr.length - 1]) != -1){
+//     input_str_arr.pop();
+//   }
+//   return input_str_arr.join("");  
+// }
+
+function trim(str, symbol = /\s/) {
+  return str.replace(new RegExp(`^[${symbol}]*|[${symbol}]*$`, "g"), "");
 }
-
-
 
 
 
@@ -3825,15 +3827,19 @@ function trim(str, symbol) {
 
 liuyiliuyi.trimEnd =
 
-function trimEnd(str, symbol) {
-  symbol = symbol ? symbol : "  　";
-  var input_symbol = symbol;
-  var input_str_arr = str.split("");
+// function trimEnd(str, symbol) {
+//   symbol = symbol ? symbol : "  　";
+//   var input_symbol = symbol;
+//   var input_str_arr = str.split("");
   
-  while(input_symbol.indexOf(input_str_arr[input_str_arr.length - 1]) != -1){
-    input_str_arr.pop();
-  }
-  return input_str_arr.join("");  
+//   while(input_symbol.indexOf(input_str_arr[input_str_arr.length - 1]) != -1){
+//     input_str_arr.pop();
+//   }
+//   return input_str_arr.join("");  
+// }
+
+function trimEnd(str, symbol = /\s/) {
+  return str.replace(new RegExp(`[${symbol}]*$`, "g"), "");
 }
 
 
@@ -3842,14 +3848,18 @@ function trimEnd(str, symbol) {
 
 liuyiliuyi.trimStart =
 
-function trimStart(str, symbol) {
-  symbol = symbol ? symbol : "  　";
-  var input_symbol = symbol;
-  var input_str_arr = str.split("");
-  while(input_symbol.indexOf(input_str_arr[0]) != -1){
-    input_str_arr.shift();
-  }
-  return input_str_arr.join("");  
+// function trimStart(str, symbol) {
+//   symbol = symbol ? symbol : "  　";
+//   var input_symbol = symbol;
+//   var input_str_arr = str.split("");
+//   while(input_symbol.indexOf(input_str_arr[0]) != -1){
+//     input_str_arr.shift();
+//   }
+//   return input_str_arr.join("");  
+// }
+
+function trimStart(str, symbol = /\s/) {
+  return str.replace(new RegExp(`^[${symbol}]*`, "g"), "");
 }
 
 
@@ -4127,7 +4137,8 @@ function(path) {
 }
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 liuyiliuyi.propertyOf
