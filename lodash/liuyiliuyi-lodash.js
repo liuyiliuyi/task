@@ -3858,30 +3858,50 @@ function trimStart(str, symbol) {
 
 liuyiliuyi.truncate =
 
+// funsction truncate(str, condition_object = {}) {
+//   var [length, omission, separator] = [condition_object.length || 30, condition_object.omission || "...", condition_object.separator || /(?:)/];
+//   var flage = false;
+//   var separator_kuo = new RegExp("(" + new RegExp(separator).toString().slice(1, -1) + ")");
+//   sep_str = str.split(separator_kuo).reduce((a, b, i) => {
+//     if((a + b).length < length) {
+//       return a + b;
+//     } else {
+//       return a;
+//     }
+//   },"");
+//   return str.length > length ? sep_str.substr(0, length - omission.length) + omission : sep_str;   
+// }
+
+
+
+// function truncate(str, condition_object = {}) {
+//   var [length, omission, separator] = [condition_object.length || 30, condition_object.omission || "...", condition_object.separator || /(?:)/];
+//   if(str.length > length) {}
+// }
+
 function truncate(str, condition_object = {}) {
-  var [length, omission, separator] = [condition_object.length || 30, condition_object.omission || "...", condition_object.separator || /(?:)/];
-  var flage = false;
-  var separator_kuo = new RegExp("(" + new RegExp(separator).toString().slice(1, -1) + ")");
-  sep_str = str.split(separator_kuo).reduce((a, b, i) => {
-    if((a + b).length < length) {
-      return a + b;
-    } else {
-      return a;
-    }
-  },"");
-  return str.length > length ? sep_str.substr(0, length - omission.length) + omission : sep_str;   
+  var [length, omission] = [condition_object.length || 30, condition_object.omission || "..."];
+  if(condition_object.separator == undefined  && str.length > length) {
+    return str.substr(0, length - omission.length) +　omission;
+  } else if(str.length > length) { // 截到length - condition.smission 的位置
+    var new_str = str.substr(0, length - omission.length);
+    return new_str.substr(0, new_str.lastIndexOf(...new_str.match(new RegExp(condition_object.separator, "g")).slice(-1))) + omission;
+  }
+  return str;
 }
-
-
-
-function truncate(str, condition_object = {}) {
-  var [length, omission, separator] = [condition_object.length || 30, condition_object.omission || "...", condition_object.separator || /(?:)/];
-  if(str.length > length) {}
-}
-
-
-
-
+/////////////////////// 对的版
+// function truncate(str, condition_object = {}) {
+//   var [length, omission] = [condition_object.length || 30, condition_object.omission || "..."];
+//   if(condition_object.separator == undefined  && str.length > length) {
+//     return str.substr(0, length - omission.length) +　omission;
+//   } else if(str.length > length) { // 截到length - condition.smission 的位置
+//     var separator = new RegExp(condition_object.separator, "g"); // 
+//     var new_str = str.substr(0, length - omission.length);
+//     return new_str.substr(0, new_str.lastIndexOf(...new_str.match(separator).slice(-1))) + omission;
+//   }
+//   return str;
+// }
+/////////////////////// 对的版
 
 // function truncate(str, condition_object = {length: 30, omission: "...", separator: /./}) {
 //   var first_str = str.substr(0, length - condition_object.omission.length);
