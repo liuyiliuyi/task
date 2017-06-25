@@ -1684,7 +1684,7 @@ function debounce() {
 liuyiliuyi.defer = 
 
 function defer(func, ...args) {
-  return setTimeout(func.apply(null, args));
+  return setTimeout(func.apply(null, args)) - 1;
 }
 
 
@@ -1694,7 +1694,7 @@ function defer(func, ...args) {
 liuyiliuyi.delay = 
 
 function delay(func, wait, ...args) {
-  setTimeout(func.apply(null, args), wait);
+  return setTimeout(func.apply(null, args), wait) - 1;
 }
 
 
@@ -1971,7 +1971,13 @@ function isElement(value) {
 liuyiliuyi.isEmpty =
 
 function isEmpty(value) {
-  
+  switch(true) {
+    case this.kindOf(value) == "[object Array]" && value.length != 0: return false;
+    case this.kindOf(value) == "[object Map]" && value.size != 0: return false;
+    case this.kindOf(value) == "[object Object]" && Object.keys(value).length != 0: return false;
+    case this.kindOf(value) == "[object String]" && value.length != 0: return false;
+    default: return true;
+  }
 }
 
 
@@ -3293,9 +3299,10 @@ liuyiliuyi.prototype.valueOf
 liuyiliuyi.camelCase =
 
 function camelCase(str) {
-  var lower_str = str.toLowerCase();
-  var str2 = lower_str.replace(/[^a-z]+[a-z]/g, x => x.slice(-1).toUpperCase()).replace(/[^A-Za-z]*/g, "");
-  return str2.slice(0, 1).toLowerCase() + str2.slice(1); 
+  // var lower_str = str.toLowerCase();
+  // var str2 = lower_str.replace(/[^a-z]+[a-z]/g, x => x.slice(-1).toUpperCase()).replace(/[^A-Za-z]*/g, "");
+  // return str2.slice(0, 1).toLowerCase() + str2.slice(1); 
+  return str.match(/[a-zA-Z0-9]+/g).reduce((a, b, i) => i == 0 ? a + b.toLowerCase() : a + b.slice(0, 1).toUpperCase() + b.slice(1).toLowerCase(), "")
 }
 
 
@@ -3305,9 +3312,10 @@ function camelCase(str) {
 
 liuyiliuyi.capitalize =
 
+  // var str_lower = str.toLowerCase() 
+  // return str_lower[0].toUpperCase() + str_lower.slice(1);
 function capitalize(str) {
-  var str_lower = str.toLowerCase() 
-  return str_lower[0].toUpperCase() + str_lower.slice(1);
+  return str.replace(/^(\w)(.*)/g, (m, a, b) => a.toUpperCase() + b.toLowerCase())
 }
 
 
@@ -3402,13 +3410,15 @@ var convert = {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.endsWith =
-function endsWith(str, char, position) {
-  if (!position) {
-    position = str.length;
-  }
-  return str[position - 1] == char ? true : false;
-}
+liuyiliuyi.endsWith = (str, char, position = str.length) => char.length < position && new RegExp("^" + '.'.repeat(position - char.length) + char).test(str);
+// function endsWith(str, char, position) {
+//   if (!position) {
+//     position = str.length;
+//   }
+//   return str[position - 1] == char ? true : false;
+// }
+
+
 
 
 
@@ -3636,17 +3646,19 @@ function parseInt(str) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.repeat =
+liuyiliuyi.repeat = (str, times) => Array(times).fill(0).reduce((x, y) => x + str, "")
 
-function repeat(str, times) {
-  var result = "";
-  var str2 = str;
-  for(i = 0; i < times; i++) {
-    result = result + str;
-  }
-  return result;
-}
-
+// function repeat(str, times) {
+//   var result = "";
+//   var str2 = str;
+//   for(i = 0; i < times; i++) {
+//     result = result + str;
+//   }
+//   return result;
+// }
+// function repeat(str, times)  {
+//   return Array(times).fill(0).reduce((x, y) => x + str, "")
+// }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -3963,13 +3975,12 @@ function getWords(str) {  //获得字符串的数组
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.upperFirst =
+liuyiliuyi.upperFirst = str => str.replace(/^(\w)/, m => m.toUpperCase())
 
-function upperFirst(str) {   //把第一个字母大写
-  var input_str = str;
-  return input_str.slice(0, 1).toUpperCase() + input_str.slice(1);
-}
-
+// function upperFirst(str) {   //把第一个字母大写
+//   var input_str = str;
+//   return input_str.slice(0, 1).toUpperCase() + input_str.slice(1);
+// }
 
 
 
@@ -3978,8 +3989,7 @@ function upperFirst(str) {   //把第一个字母大写
 
 liuyiliuyi.words =
 
-function words(str, pattern) {
-  pattern = pattern ? pattern : /\w+/g;
+function words(str, pattern = /\w+/g) {
   return str.match(pattern);
 }
 
