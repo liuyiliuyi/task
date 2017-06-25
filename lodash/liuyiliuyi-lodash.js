@@ -131,7 +131,7 @@ liuyiliuyi.differenceWith  =
 function dropRightWhile(objects, value, comparator) {
   var arr = [];
   var amount;
-  for(i = 0; i < objects.length; i++) {
+  for(var i = 0; i < objects.length; i++) {
     amount = 0;
     for(j = 0; j < value.length; j++) {
       if(!comparator(objects[i], value[j])) {
@@ -180,7 +180,7 @@ liuyiliuyi.dropRightWhile =
 
 function dropRightWhile(array, predicate) {
   var a = liuyiliuyi.judge(predicate);
-  for(i = array.length - 1; i >= 0; i--) {
+  for(var i = array.length - 1; i >= 0; i--) {
       if(a(array[i]) == false) {
         array.splice(i + 1);
         return array;
@@ -1535,6 +1535,14 @@ function some(collection, predicate) {
 
 liuyiliuyi.sortBy =
 
+function (collection, iteratee) {
+  
+}
+
+
+
+
+
 // function sortBy(collection, iteratee, orders) {
 //   if(arguments.length == 3) {iteratee = order}
 //   for(let i = iteratee.length - 1; i >= 0; i--){
@@ -1984,13 +1992,50 @@ function isEmpty(value) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.isEqual 
+liuyiliuyi.isEqual =
+
+function isEqual(value, other) {
+  if(value === other) return true;
+  if(({}).toString.call(value) != ({}).toString.call(other)) return false;
+  if ((typeof value == "object" || typeof value == "array") && value != "null") {
+    var keys = Object.keys(value);
+    var length = keys.length;
+    if(length != Object.keys(other).length) return false;
+    while(length--) {
+      if(!this.isEqual(value[keys[length]], other[keys[length]])) return false;
+    }
+  } else if (({}).toString.call(value) == "[object RegExp]") return value.toString() === other.toString();
+  else {
+    return value === other;
+  }
+  return true;
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.isEqualWith
+liuyiliuyi.isEqualWith =
+
+function isEqualWith(value, other, fn) {
+  if(value === other) return true;
+  if(({}).toString.call(value) != ({}).toString.call(other)) return false;
+  if ((typeof value == "object" || typeof value == "array") && value != "null") {
+    var keys = Object.keys(value);
+    var length = keys.length;
+    if(length != Object.keys(other).length) return false;
+    while(length--) {
+      if(!this.isEqualWith(fn(value[keys[length]]), fn(other[keys[length]]))) return false;
+    }
+  } else if (({}).toString.call(value) == "[object RegExp]") return value.toString() === other.toString();
+  else {
+    return fn(value,other) === fn(other,value);
+  }
+  return true;
+}
+
+
+
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2006,7 +2051,7 @@ function isError(value) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.isFinite= 
+liuyiliuyi.isFinite = 
 
 function isFinite(value) {
   return Math.abs(value) < Infinity && typeof value == "number";
@@ -2061,13 +2106,21 @@ function isMap(value) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.isMatch
+liuyiliuyi.isMatch =
+
+function isMatch(object, source) {
+  return Object.keys(source).every(a => this.isEqual(object[a], source[a]));
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.isMatchWith
+liuyiliuyi.isMatchWith =
+
+function isMatchWith(object, source, fn) {
+  return Object.keys(source).every(a => this.isEqualWith(object[a], source[a], fn));
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2717,7 +2770,21 @@ function defaults(object, ...source) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.defaultsDeep 
+liuyiliuyi.defaultsDeep =
+
+function defaultsDeep(object, ...source) {
+  return source.reduce((a, b) => {
+    for(var key in b) {
+      if(typeof b[key] == "object") {
+        defaultsDeep(a[key], b[key])
+      }
+      if(a[key] == undefined) {
+        a[key] = b[key];
+      }
+    }
+    return a;
+  } ,object)
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3068,41 +3135,53 @@ function mapValues(object, iteratee) {
 
 liuyiliuyi.merge =
 
-function merge() {
-
+function merge(object, ...source) {
+  return source.reduce((a, b) => {
+           return Object.keys(b).reduce((x, y) => {
+             if(typeof b[y] !== "object") x[y] = b[y];
+             merge(x[y], b[y]);
+             return x;
+          } 
+           ,a)
+         }, object)
 }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.mergeWith
+liuyiliuyi.mergeWith =
 
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-liuyiliuyi.omit =
-
-function omit(object, arr) {
-  
+function mergeWith(object, ...source) {
+  return source.reduce((a, b) => {
+           return Object.keys(b).reduce((x, y) => {
+             if(typeof b[y] !== "object") x[y] = b[y];
+             mergeWith(x[y], b[y]);
+             return x;
+          } 
+           ,a)
+         }, object)
 }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.omitBy
+liuyiliuyi.omit =  (object, arr) => Object.keys(object).reduce((a, b) => arr.indexOf(b) === -1 && (a[b] = object[b]) ? a : a , {});
+
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.pick =
+liuyiliuyi.omitBy = (object, predicate) => Object.keys(object).reduce((a, b) => predicate(object[b], b) === false && (a[b] = object[b]) ? a : a , {});
 
-function pick(object, arr) {
-  return arr.reduce((a, b) => {a[b] = object[b]; return a}, {});
-}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+liuyiliuyi.pick = (object, arr) => arr.reduce((a, b) => {a[b] = object[b]; return a}, {});
+
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3702,6 +3781,7 @@ liuyiliuyi.split =
 
 function split(str, symbol, length) {
   return str.split(symbol).slice(0, length);
+  
 }
 
 
@@ -4157,7 +4237,11 @@ liuyiliuyi.propertyOf
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.range
+liuyiliuyi.range =
+
+function range() {
+
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
