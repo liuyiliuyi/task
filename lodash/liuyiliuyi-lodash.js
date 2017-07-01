@@ -1599,6 +1599,12 @@ function ary(func, length) {
   }
 }
 
+function ary(func, length) {
+  return function(...arg) {
+    return func.apply.call(this, arg.slice(0, length + 1))
+  }
+}
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1709,10 +1715,10 @@ function delay(func, wait, ...args) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.flip =
+liuyiliuyi.flip = func => (...x) => func(...(x.reverse()));
 
-function flip() {
-}
+// function flip(func) {
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1734,13 +1740,20 @@ function memoize(fn, resolver) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.negate
+liuyiliuyi.negate = predicate => (...arg) => !predicate(...arg);
+
+// function negate(predicate) {
+//   return function(...arg) {
+//     return !predicate.apply(this,arg)
+//   }
+// }
+
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.once
+liuyiliuyi.once = (f, flag = true, result) => (...arg) => flag ? (flag = false, result = f(...arg)) : result; 
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1776,7 +1789,14 @@ liuyiliuyi.rest
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.spread
+liuyiliuyi.spread = (func, start) => arg => func(...(arg.slice(start)));
+
+// function spread(func, start = 0) {
+//   return function(arg) {
+//     return func(...(arg.slice(start)));
+//   }
+
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1788,7 +1808,7 @@ liuyiliuyi.throttle
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.unary
+liuyiliuyi.unary = func => x => func(x);
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1828,7 +1848,16 @@ function clone(value) {
 
 liuyiliuyi.cloneDeep =
 
-function cloneDeep() {}
+function cloneDeep(value) {
+  var result;
+  if(typeof value !== "object" || value === null) return value;
+  else if (Array.isArray(value)) result = [];
+  else if (typeof value === "object") result = {};
+  for(var key in value) {
+    result[key] = cloneDeep(value[key])
+  } 
+  return result;
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1836,7 +1865,9 @@ function cloneDeep() {}
 
 liuyiliuyi.cloneDeepWith =
 
-function cloneDeepWith() {}
+function cloneDeepWith(value, customizer) {
+  
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1844,7 +1875,18 @@ function cloneDeepWith() {}
 
 liuyiliuyi.cloneWith =
 
-function cloneWith() {}
+function cloneWith(value, customizer) {
+  var result;
+  if(!customizer) return this.clone(value);
+  if(customizer(value) === undefined)
+  if(typeof customizer(value) !== "object" || customizer(value) === "null") return customizer(value);
+  if(Array.isArray(customizer(value))) result = [];
+  if(typeof value === "object") result = {};
+  for(var key in customizer(value)) {
+    result[key] = customizer(value[key], key, value, stack)[key];
+  }
+  return result;
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2139,7 +2181,7 @@ function isMatchWith(object, source, fn) {
 liuyiliuyi.isNaN =
 
 function isNaN(value) {
-  return typeof value === "number" || value instanceof Number && value.toString() === "NaN";
+  return (typeof value === "number" || value instanceof Number) && value.toString() === "NaN";
 }
 
 
@@ -4140,37 +4182,54 @@ liuyiliuyi.cond
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.conforms
+liuyiliuyi.conforms =
+
+function conforms(source) {
+  return function(arg) {
+    return Object.keys(source).every((value) => source[value](arg[value]));
+  }
+} 
+
+
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.constant = 
+liuyiliuyi.constant = value => () => value;
 
-function constant(value) {
-  return function() {
-    return value;
-  }
+// function constant(value) {
+//   return function() {
+//     return value;
+//   }
+// }
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+liuyiliuyi.defaultTo =
+
+function defaultTo(value, defaultValue) {
+  return this.isNaN(value) || value === null || value === undefined ? defaultValue : value;
 }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.defaultTo
-
+liuyiliuyi.flow = func => (...args) => func.reduce((x, y, i) => i === 0 ? y(...x) : y(x), args);
+// function flow(func) {
+//   var that = this;
+//   return function(...args) {
+//     return func.reduce((x, y, i) => {if(i === 0) return y(...args); else return y(x)}, args);
+//   }
+// }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.flow
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-liuyiliuyi.flowRight
+liuyiliuyi.flowRight = func => (...args) => func.reduceRight((x, y, i) => i === 0 ? y(...x) : y(x), args); 
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -4196,17 +4255,30 @@ liuyiliuyi.matches
 
 liuyiliuyi.matchesProperty
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+liuyiliuyi.method = (path, args) => obj => args ? liuyiliuyi.toPath(path).reduce((x, y)  => x[y], obj)(...args) : liuyiliuyi.toPath(path).reduce((x, y) => x[y], obj)();
+
+// function method(path, args) {
+  
+//   return function (obj) {
+//     return args ? this.toPath(path).reduce((x, y) => x[y], obj)() : this.toPath(path).reduce((x, y) => x[y], obj)(...args);
+//   }
+// }
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.method
+liuyiliuyi.methodOf = (object, args) => path => args ? liuyiliuyi.toPath(path).reduce((x, y) => x[y], object)(...args) : liuyiliuyi.toPath(path).reduce((x, y) => x[y], object)();
 
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-liuyiliuyi.methodOf
+// function methodOf(object, args) {
+//   var self = this;
+//   return function (path) {
+//     return args ? self.toPath(path).reduce((x, y) => x[y], object)(...args) : self.toPath(path).reduce((x, y) => x[y], object)();
+//   }
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -4230,7 +4302,13 @@ liuyiliuyi.noop
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.nthArg
+liuyiliuyi.nthArg = (n = 0) => (...arg) => arg[(n + arg.length) % arg.length];
+
+// function nthArg(n = 0) {
+//   return function(...arg) {
+//     return arg[(n + length) % length ]
+//   }
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -4272,7 +4350,14 @@ function(path) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.propertyOf
+liuyiliuyi.propertyOf =
+
+function(object) {                
+  var self = this;
+  return function(arg) {
+    return self.toPath(arg).reduce((x, y) => x[y], object);
+  }
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -4280,15 +4365,29 @@ liuyiliuyi.propertyOf
 
 liuyiliuyi.range =
 
-function range() {
-
+function range(start = 0, end, step = 1) {
+  var result = [];
+  if(arguments.length === 1 && arguments[0] <= 0) {
+    end = start, start = 0, step = -1;
+  }
+  else if(arguments.length === 1) {
+    end = start, start = 0;
+  }
+  for(var i = start; Math.abs(i) < Math.abs(end) && result.length < Math.abs(end - start); i += step) {
+    result.push(i);
+  }
+  return result;
 }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.rangeRight
+liuyiliuyi.rangeRight =
+
+function rangeRight(start = 0, end, step = 1) {
+  return this.range(start, end, step).reverse();
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -4330,19 +4429,40 @@ liuyiliuyi.stubTrue
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.times
+liuyiliuyi.times =
+
+function times(n, iteratee) {
+  var result = [];
+  for(var i = 0; i < n; i++){
+    result.push(iteratee(i));
+  }
+  return result;
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.toPath
+liuyiliuyi.toPath =
+
+function toPath(value) {
+  try{
+    return value.match(/[^\[\]\.]/g);
+  } catch (e) {
+    return value;
+  }
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.uniqueId
+liuyiliuyi.uniqueId =
+
+function uniqueId(prefix = "") {
+  amount ? amount++ : amount = 1;
+  return prefix + amount;
+}
 
 debugger;
 
