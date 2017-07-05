@@ -4,90 +4,91 @@ var liuyiliuyi = {};
 // Array
 
 
-liuyiliuyi.chunk = 
+liuyiliuyi.chunk = chunk = (array, size = 1) => array.reduce((x, y, i) => (i % size === 0 ? x.push([y]) : x[i / size | 0].push(y), x) ,[]);
 
-function chunk(array, size = 1) {
-  var store_arr = [];
-  var result = [];
-  var length = Math.floor(array.length / size) * size
-  for (var i = 0; i < length; i++) {
-    store_arr[i % size] = array[i];
-    if(store_arr.length == size) {
-      result.push(store_arr);
-      store_arr = [];
-    }
-    //if((i + 1) % 3 != 0)
-  }
-  for(var j = length; j < array.length; j++) {
-    store_arr[j % size] = array[j];
-  }
-  if(store_arr.length != 0)
-  result.push(store_arr);
-  return result;
-} 
+// function chunk(array, size = 1) {
+//   var store_arr = [];
+//   var result = [];
+//   var length = Math.floor(array.length / size) * size
+//   for (var i = 0; i < length; i++) {
+//     store_arr[i % size] = array[i];
+//     if(store_arr.length == size) {
+//       result.push(store_arr);
+//       store_arr = [];
+//     }
+//     //if((i + 1) % 3 != 0)
+//   }
+//   for(var j = length; j < array.length; j++) {
+//     store_arr[j % size] = array[j];
+//   }
+//   if(store_arr.length != 0)
+//   result.push(store_arr);
+//   return result;
+// } 
 
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-liuyiliuyi.compact = 
-
-function compact(arr){
-  var input_arr = arr;
-  var new_arr = [];
-  for(var i = 0; i < input_arr.length; i++) {
-    if(arr[i]) {
-      new_arr.push(arr[i]);
-    }
-  }
-  return new_arr;
-}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.concat =
+liuyiliuyi.compact = (array) => array.filter(x => x);
 
-function concat(array,values) {
-  var input_arr = array;
-  var new_arr = [];
-  for(var i = 0; i < arguments.length; i++){
-    if(typeof(arguments[i]) == "object") {
-      for(var j = 0; j < arguments[i].length; j++) {
-        new_arr.push(arguments[i][j]);
-      }
-    } else {
-      new_arr.push(arguments[i]);
-    }
-  }
-  return new_arr;
-}
+// function compact(arr){
+//   var input_arr = arr;
+//   var new_arr = [];
+//   for(var i = 0; i < input_arr.length; i++) {
+//     if(arr[i]) {
+//       new_arr.push(arr[i]);
+//     }
+//   }
+//   return new_arr;
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.difference = 
+liuyiliuyi.concat = (array, ...args) => args.reduce((x, y) => (Array.isArray(y) ? x.push(...y) : x.push(y), x), array);
 
-function difference(arr, value){
-  var input_arr = arr;
-  var new_arr = [];
-  for(var i = 0; i < input_arr.length; i++) {
-    var count = 0;
-    for(var j = 0; j < value.length; j++) {
-      if(input_arr[i] != value[j]) {
-        count++;
-        //continue;
-      }
-    }
-    if(count == value.length) {
-      new_arr.push(input_arr[i])
-    }
-  }
-  return new_arr;
-}
+
+// function concat(array,values) {
+//   var input_arr = array;
+//   var new_arr = [];
+//   for(var i = 0; i < arguments.length; i++){
+//     if(typeof(arguments[i]) == "object") {
+//       for(var j = 0; j < arguments[i].length; j++) {
+//         new_arr.push(arguments[i][j]);
+//       }
+//     } else {
+//       new_arr.push(arguments[i]);
+//     }
+//   }
+//   return new_arr;
+// }
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+liuyiliuyi.difference = (array, values) => array.reduce((x, y) => (~values.indexOf(y) || x.push(y), x), []);
+
+// function difference(arr, value){
+//   var input_arr = arr;
+//   var new_arr = [];
+//   for(var i = 0; i < input_arr.length; i++) {
+//     var count = 0;
+//     for(var j = 0; j < value.length; j++) {
+//       if(input_arr[i] != value[j]) {
+//         count++;
+//         //continue;
+//       }
+//     }
+//     if(count == value.length) {
+//       new_arr.push(input_arr[i])
+//     }
+//   }
+//   return new_arr;
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -149,29 +150,29 @@ function dropRightWhile(objects, value, comparator) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.drop = 
+liuyiliuyi.drop = (array, n = 1) => array.reduce((x, y, i) => (i >= n && x.push(y), x), []);
  
-function drop(arr, n = 1) {
-  var new_arr = arr;
-  for(var i = 0; i < n; i++) {
-    new_arr.shift();
-  }
-  return new_arr;
-}
+// function drop(arr, n = 1) {
+//   var new_arr = arr;
+//   for(var i = 0; i < n; i++) {
+//     new_arr.shift();
+//   }
+//   return new_arr;
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.dropRight =
+liuyiliuyi.dropRight = (array, n = 1) => array.reduce((x, y, i) => (i < array.length - n && x.push(y), x), []);
 
-function dropRight(arr, n = 1) {
-  var new_arr = arr;
-  for(var i = 0; i < n; i++) {
-    new_arr.pop();
-  }
-  return new_arr;
-}
+// function dropRight(arr, n = 1) {
+//   var new_arr = arr;
+//   for(var i = 0; i < n; i++) {
+//     new_arr.pop();
+//   }
+//   return new_arr;
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -224,18 +225,18 @@ function dropWhile(array, predicate) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.fill = 
+liuyiliuyi.fill = (array, value, start = 0, end = array.length) => ([...array].some((x, i) => start <= i && i < end && (array[i] = value) && i >= end && true), array)
 
-function fill(array, value, start = 0, end) {
-  var new_arr = array;
-  if(end === undefined) {
-    end = array.length;
-  }
-  for(var i = start; i < end; i++) {
-    new_arr[i] = value; 
-  } 
-  return new_arr;
-}
+// function fill(array, value, start = 0, end) {
+//   var new_arr = array;
+//   if(end === undefined) {
+//     end = array.length;
+//   }
+//   for(var i = start; i < end; i++) {
+//     new_arr[i] = value; 
+//   } 
+//   return new_arr;
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1052,18 +1053,8 @@ function zipObject(props, values) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.zipObjectDeep =
+liuyiliuyi.zipObjectDeep = (prop, values) => prop.reduce((x, y, i) => liuyiliuyi.set(x, y, values[i]), {});
 
-function zipObjectDeep(prop, values) {
-  //把单路径转化为数组;
-  path_arr = Array.isArray(path) ? path : path.split("]").join("").split("[").join(".").split(".");
-  //path_arr 为路径数组；
-  var obj = {};
-  path_arr.reduce((x, y) => {
-
-  }, obj)
-
-}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1636,6 +1627,8 @@ function before(n, func) {
   }
 }
 
+
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -1643,7 +1636,8 @@ liuyiliuyi.bind =
 
 function bind(func, thisArg, ...arg) {
   return function(...rest) {
-    return func.call(thisArg, ...arg, ...rest);
+    var result = arg.reduce ((x, y) => {if(y === _) return x.concat(rest.shift()); else return x.concat(y)},[]).concat(rest);
+    return func.apply(thisArg, result);
   }
 }
 
@@ -1687,8 +1681,21 @@ liuyiliuyi.curryRight
 
 liuyiliuyi.debounce =
 
-function debounce() {
-
+function debounce(fn, duration = 0, {leading = false, 
+                                     trailing = true,
+                                     maxWait
+                                    } = {}        ) {
+  var time
+  return function(...args) {
+    // leading === true && fn(...args);
+    duration = maxWait === undefined ? duration : Math.min(maxWait, duration);
+    var id = setTimeout(fn, duration, ...args);
+    if(Date.now() - time > duration && leading === true) {fn(...args); clearTimeout(id)} 
+    else if(Date.now() - time < duration || !trailing) {
+      clearTimeout(id);
+    }
+    time = Date.now();
+  }
 }
 
 
@@ -1802,7 +1809,11 @@ liuyiliuyi.spread = (func, start) => arg => func(...(arg.slice(start)));
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.throttle
+liuyiliuyi.throttle =
+
+function() {
+  
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2548,11 +2559,14 @@ liuyiliuyi.mean = function mean(array) {
 }
 
 
-liuyiliuyi.matches = function matches(target) {
-  return function(source) {
+liuyiliuyi.matches = target => source => liuyiliuyi.isMatch(target, source);
 
-  }
-}
+// function matches(target) {
+//   var self = this;
+//   return function(source) {
+//     return self.isMatch(target, source);
+//   }
+// }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -3264,19 +3278,57 @@ function result(object, path, defaultvalue) {
 liuyiliuyi.set =
 
 function set(object, path, value) {
-  path = Array.isArray(path) ? path : path.split("]").join("").split("[").join(".").split(".");
-  path.reduce((x, y) => {
-
-  }, {})
-
-
+  // path = (Array.isArray(path) && path) ||  path.split("]").join("").split("[").join(".").split(".");
+  path = this.toPath(path);
+  function change(obj, index = 0, value) {
+    if(index >= path.length - 1) {
+      obj[path[index]] = value;
+      return obj;   
+    }
+    if(path[index] in obj) {
+      return change(obj[path[index]], ++index, value);
+    } else if (!isNaN(+path[index + 1])) {
+      obj[path[index]] = [];
+      return change(obj[path[index]], ++index, value);
+    } else {
+      obj[path[index]] = {};
+      return change(obj[path[index]], ++index, value);
+    }
+  
+  }   
+  change(object, 0, value);
+  return object;
 }
+
+
+
+
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.setWith
+liuyiliuyi.setWith =
+
+function setWith(object, path, value, customizer) {
+  // path = (Array.isArray(path) && path) ||  path.split("]").join("").split("[").join(".").split(".");
+  path = this.toPath(path);
+  function change(obj, index = 0, value) {
+    if(index >= path.length - 1) {
+      obj[path[index]] = value;
+      return obj;   
+    }
+    if(path[index] in obj) {
+      return change(obj[path[index]], ++index, value);
+    } else {
+      obj[path[index]] = new customizer;
+      return change(obj[path[index]], ++index, value);
+    }
+  
+  }   
+  change(object, 0, value);
+  return object;
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3325,7 +3377,25 @@ function(object, path) {
 liuyiliuyi.update =
 
 function(object, path, updater) {
+  path = this.toPath(path);
+  function change(obj, index = 0) {
+    if(index >= path.length - 1) {
+      obj[path[index]] = updater(obj[path[index]]);
+      return obj;   
+    }
+    if(path[index] in obj) {
+      return change(obj[path[index]], ++index);
+    } else if (!isNaN(+path[index + 1])) {
+      obj[path[index]] = [];
+      return change(obj[path[index]], ++index);
+    } else {
+      obj[path[index]] = {};
+      return change(obj[path[index]], ++index);
+    }
   
+  }   
+  change(object, 0);
+  return object;
 
 }
 
@@ -3335,7 +3405,24 @@ function(object, path, updater) {
 
 liuyiliuyi.updateWith =
 
-function() {}
+function(object, path, updater, customizer) {
+   path = this.toPath(path);
+  function change(obj, index = 0) {
+    if(index >= path.length - 1) {
+      obj[path[index]] = updater(obj[path[index]]);
+      return obj;   
+    }
+    if(path[index] in obj) {
+      return change(obj[path[index]], ++index);
+    } else {
+      obj[path[index]] = new customizer;
+      return change(obj[path[index]], ++index);
+    }
+  
+  }   
+  change(object, 0);
+  return object;
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3931,6 +4018,11 @@ function toUpper(str){
 
 liuyiliuyi.trim =
 
+function trim(str, symbol = /\s/) {
+  return str.replace(new RegExp(`^[${symbol}]*|[${symbol}]*$`, "g"), "");
+}
+
+
 // function remove_left_right_symbol(str) {
 //   return str.match(/([^0-9A-Za-z]*)([0-9A-Za-z].*[0-9A-Za-z])([^0-9A-Za-z]*)/); //返回[全部匹配, 捕获左边, 捕获中间，捕获右边,]
 // }
@@ -3959,7 +4051,7 @@ liuyiliuyi.trim =
    * 去除字符串前后给定的符号
    * @str {字符串} {str} [输入的字符串]
    * @symbol {字符串} [symbol] [要删除的符号]
-   * @return {[type]} [description]
+  //  *[description]
    */
 /*
 function trim(str, symbol) {
@@ -3990,9 +4082,6 @@ function trim(str, symbol) {
 //   return input_str_arr.join("");  
 // }
 
-function trim(str, symbol = /\s/) {
-  return str.replace(new RegExp(`^[${symbol}]*|[${symbol}]*$`, "g"), "");
-}
 
 
 
@@ -4170,7 +4259,11 @@ liuyiliuyi.attempt
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.bindAll
+liuyiliuyi.bindAll =
+// this.toPath(methodNames);
+function (object, methodNames) {
+  
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -4247,14 +4340,6 @@ liuyiliuyi.iteratee
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.matches
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-liuyiliuyi.matchesProperty
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -4284,7 +4369,13 @@ liuyiliuyi.methodOf = (object, args) => path => args ? liuyiliuyi.toPath(path).r
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.mixin
+liuyiliuyi.mixin =
+
+function mixin(object = liuyiliuyi, source, option = {}) {   /*object.__proto__.x = source([x])   object = source([x])*/
+  var that = this;
+  arguments.length === 1 && (source = object, object = liuyiliuyi);
+  Object.keys(source).forEach((x) => that.isFunction(source[x]) && (that.isFunction(object) ? object.__proto__.x = source[x] : object = source[x]));
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -4385,10 +4476,23 @@ function range(start = 0, end, step = 1) {
 
 liuyiliuyi.rangeRight =
 
-function rangeRight(start = 0, end, step = 1) {
-  return this.range(start, end, step).reverse();
-}
+// function rangeRight(start = 0, end, step = 1) {
+//   var result = [];
+//   if(arguments.length === 1 && arguments[0] <= 0) {
+//     end = start, start = 0, step = -1;
+//   } else if(arguments.length === 1) {
+//     end = start, start = 0;
+//   }
+  
 
+
+
+
+//   for(var i = (Math.abs(end) - 1); i >= start; i -= step)
+//     result.push(i);
+//   }
+//   return result;
+// }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -4466,9 +4570,9 @@ function uniqueId(prefix = "") {
 
 debugger;
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/*
 
+/*
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 liuyiliuyi.VERSION
 
