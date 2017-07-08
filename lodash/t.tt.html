@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+  <style>
+    #outside {
+      width: 1200px;
+      height: 500px;
+      margin: 100px 0 0 400px;
+    }
+
+    img {
+    background-color: white;
+    border:1px solid #ddd;
+    border-radius: 10px;
+    height: 500px;
+    width: 1100px;
+    box-shadow: 0 0 60px rgba(0, 0, 0, 0.2);
+  }
+
+  #stage {
+    transform-style: preserve-3d;
+    perspective: 400px;
+    width: 1100px;
+    height: 500px;
+  }
+
+  body {
+    background-color: #ddd;
+  }
+</style>
+</head>
+<body>
+  <div id = "outside">
+    
+    <div id ="stage" >
+      <!-- <div class="a"></div> -->
+      <img id = "pic" style ="transform: rotate3d(0, 0, 0, 0deg)" src="http://image.smartisanos.cn/resource/2/8/xianhuo2.png?x-oss-process=image/resize,w_1220/quality,Q_100/format,webp"></img>
+    </div>
+  </div>
+<script>
+  outside.addEventListener("mousemove", throttle(e => {
+  
+  console.log(e.offsetX, e.offsetY);
+    //pic.style.transform = `rotate3d(${550 - e.offsetX}, ${-250 + e.offsetY}, 0, ${-1 * (Math.abs((e.offsetY - 250) * (e.offsetX - 550)) === (e.offsetY - 250) * (e.offsetX - 550) ? -1 : 1) * Math.sqrt((550 - e.offsetX)**2 + (-250 + e.offsetY)**2) / 30}deg)`
+  pic.style.transform = `rotate3d(${550 - e.offsetX}, ${-250 + e.offsetY}, 0, ${((e.offsetY - 250) * (e.offsetX - 550) > 0 ? 1 : -1) * Math.sqrt((550 - e.offsetX)**2 + (-250 + e.offsetY)**2) / 30}deg)`
+  
+  console.log(pic.style.transform);
+
+}, 16))
+  function throttle(fn, gap) {
+    var time = Date.now();
+    return function(...args) {
+      if(Date.now() - time > gap) {
+        fn(...args);
+        time = Date.now();
+      }
+    }
+  }
+
+
+</script>
+</body>
+
+</html>

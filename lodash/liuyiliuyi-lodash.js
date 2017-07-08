@@ -274,32 +274,33 @@ function findIndex(array, predivate, fromIndex = array.length - 1) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.head = 
+liuyiliuyi.head = array => array[0];
 
-function head(array) {
-  result = array[0];
-  return result;
-}
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-liuyiliuyi.flatten =
-
-function flatten(array) {
-  return array.concat().reduce((a, b) => a.concat(b), []);
-}
+// function head(array) {
+//   result = array[0];
+//   return result;
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.flattenDeep = 
+liuyiliuyi.flatten = array => array.reduce((a, b) => a.concat(b), []);
 
-function flattenDeep(array) {
-  return array.concat().reduce((a, b) => a.concat(Array.isArray(b) ? flattenDeep(b) : b), []);
-}
+// function flatten(array) {
+//   return array.concat().reduce((a, b) => a.concat(b), []);
+// }
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+liuyiliuyi.flattenDeep = array => array.reduce((a, b) => a.concat(Array.isArray(b) ? liuyiliuyi.flattenDeep(b) : b), []);
+
+
+// function flattenDeep(array) {
+//   return array.reduce((a, b) => a.concat(Array.isArray(b) ? flattenDeep(b) : b), []);
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -315,25 +316,25 @@ function flattenDepth(array, depth = 1) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.fromPairs =
+liuyiliuyi.fromPairs = pairs => pairs.reduce((a, b) => (a[b[0]] = b[1], a), {})
 
-function fromPairs(pairs) {
-  var obj = {};
-  for(key in pairs) {
-    obj[pairs[key][0]] = pairs[key][1]
-  }
-  return obj;
-}
+// function fromPairs(pairs) {
+//   var obj = {};
+//   for(key in pairs) {
+//     obj[pairs[key][0]] = pairs[key][1]
+//   }
+//   return obj;
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.head = 
+liuyiliuyi.head = array => array[0];
 
-function head(array) {
-  return array[0];
-}
+// function head(array) {
+//   return array[0];
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -354,19 +355,19 @@ function indexOf(array, value, fromIndex = 0) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.initial = 
+liuyiliuyi.initial = array => (array.pop(), array);
 
-function initial(array) {
-  array.pop();
-  return array;
-}
+// function initial(array) {
+//   array.pop();
+//   return array;
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.intersection =
-
+liuyiliuyi.intersection = /*(...arg) => arg.reduce((x, y) => ,[])
+*/
 function intersection(...ary) {
   var arr1 = ary[0];
   var new_arr = [];
@@ -429,21 +430,21 @@ function intersectionWith(...arg) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.join =
+liuyiliuyi.join = (array, separator = ",") => array.reduce((a, b, i) => i === 0 ? b + "" : a + separator + b, "")
 
-function join(array, separator) {
-  return array.join(separator);
-}
+// function join(array, separator) {
+//   return array.join(separator);
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.last =
+liuyiliuyi.last = array => array[array.length - 1]
 
-function last(array) {
-  return array[array.length - 1];
-}
+// function last(array) {
+//   return array[array.length - 1];
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -575,7 +576,7 @@ function remove(array, predicate) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.reverse =
+liuyiliuyi.reverse = /*array => array.reduce((a, b) => )*/
 
 function reverse(array) {
   return array.reverse();
@@ -4262,7 +4263,8 @@ liuyiliuyi.attempt
 liuyiliuyi.bindAll =
 // this.toPath(methodNames);
 function (object, methodNames) {
-  
+  methodNames = Array.isArray(methodNames) ? methodNames : [methodNames];
+  methodNames.forEach((x) => object[x] = object[x].bind(object));
 }
 
 
@@ -4568,7 +4570,6 @@ function uniqueId(prefix = "") {
   return prefix + amount;
 }
 
-debugger;
 
 
 /*
