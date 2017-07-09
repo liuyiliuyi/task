@@ -242,17 +242,17 @@ liuyiliuyi.fill = (array, value, start = 0, end = array.length) => ([...array].s
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.findIndex =
+liuyiliuyi.findIndex = (array, predicate, fromIndex = 0) => array.findIndex(liuyiliuyi.judge(predicate));
 
-function findIndex(array, predivate, fromIndex = 0) {
-  var a = liuyiliuyi.judge(predivate);
-  for(i = fromIndex; i < array.length; i++) {
-    if(a(array[i]) == true) {
-      return i
-    }
-  }
-  return -1;
-}
+// function findIndex(array, predivate, fromIndex = 0) {
+//   var a = liuyiliuyi.judge(predivate);
+//   for(i = fromIndex; i < array.length; i++) {
+//     if(a(array[i]) == true) {
+//       return i
+//     }
+//   }
+//   return -1;
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -340,22 +340,22 @@ liuyiliuyi.head = array => array[0];
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.indexOf = 
+liuyiliuyi.indexOf = (array, value, fromIndex = 0) => array.indexOf(value, fromIndex <= -array.length ? 0 : -array.length < fromIndex && fromIndex < 0 ? fromIndex + array.length : fromIndex);                   
 
-function indexOf(array, value, fromIndex = 0) {
-  if(fromIndex < 0) {
-    return array.lastIndex(value, fromIndex + array.length)
-  } else {
-    return array.indexOf(value, fromIndex);
-  }
-}
+// function indexOf(array, value, fromIndex = 0) {
+//   if(fromIndex < 0) {
+//     return array.lastIndex(value, fromIndex + array.length)
+//   } else {
+//     return array.indexOf(value, fromIndex);
+//   }
+// }
 
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.initial = array => (array.pop(), array);
+liuyiliuyi.initial = array => array.slice(0, -1);
 
 // function initial(array) {
 //   array.pop();
@@ -366,24 +366,24 @@ liuyiliuyi.initial = array => (array.pop(), array);
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.intersection = /*(...arg) => arg.reduce((x, y) => ,[])
-*/
-function intersection(...ary) {
-  var arr1 = ary[0];
-  var new_arr = [];
-  for(i = 0; i < arr1.length; i++) {
-    amount = 0
-    for(j = 0; j < ary.length; j++) {
-      if(ary[j].indexOf(arr1[i]) == -1) {
-        break;
-      } else amount++;
-    }
-    if(amount == ary.length) {
-      new_arr.push(arr1[i]);
-    }
-  }
-  return new_arr;
-}
+liuyiliuyi.intersection = (...arg) => arg[0].reduce((x, y) => (arg.every(a => a.includes(y)) && x.push(y), x),[])
+
+// function intersection(...ary) {
+//   var arr1 = ary[0];
+//   var new_arr = [];
+//   for(i = 0; i < arr1.length; i++) {
+//     amount = 0
+//     for(j = 0; j < ary.length; j++) {
+//       if(ary[j].indexOf(arr1[i]) == -1) {
+//         break;
+//       } else amount++;
+//     }
+//     if(amount == ary.length) {
+//       new_arr.push(arr1[i]);
+//     }
+//   }
+//   return new_arr;
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -467,11 +467,11 @@ function lastIdexOf(array, value, fromIndex = array.length -1) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.nth =
+liuyiliuyi.nth = (array, n) => n < 0 ? array[array.length + n] : array[0];
 
-function nth(array, n) {
-  return n < 0 ? array[array.length + n] : array[n];
-}
+// function nth(array, n) {
+//   return n < 0 ? array[array.length + n] : array[n];
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3057,15 +3057,21 @@ function get(object, path, value) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.has =
+liuyiliuyi.has = /*(object, path) => this.toPath(path).reduce((x, y, i) => x.hasOwnProperty(y) && x[y] , object)
 
 function has(object, path) {
   var path = Array.isArray(path) ? path : path.split("]").join("").split("[").join(".").split(".");
-  return path.reduce((x, y) => {
-    return x === false ? false : x.hasOwnProperty(y) && x[y];
-  }, object) === false ? false : true;
+  return path.reduce((x, y) => x === false ? false : x.hasOwnProperty(y) && x[y], object) === false ? false : true;
+*/
+function(object, path) {
+  var path = this.toPath(path);
+  var x = object;
+  for(var i = 0; i < path.length; i++) {
+    if(x.hasOwnProperty(path[i])) x = x[path[i]];
+    else return false;
+  }
+  return true;
 }
-
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -3142,27 +3148,27 @@ function invoke(object, path, ...args) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.keys =
+liuyiliuyi.keys = Object.keys
 
-function keys(object) {
-  var arr = [];
-  for(key in object) {
-    if(object.hasOwnProperty(key)) {
-      arr.push(key);
-    }
-  }
-  return arr;
-}
+// function keys(object) {
+//   var arr = [];
+//   for(key in object) {
+//     if(object.hasOwnProperty(key)) {
+//       arr.push(key);
+//     }
+//   }
+//   return arr;
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.keysIn =
+liuyiliuyi.keysIn = 
 
 function keysIn(object) {
   var arr = [];
-  for(key in object) {
+  for(var key in object) {
       arr.push(key);
   }
   return arr;  
@@ -3189,7 +3195,7 @@ function mapKeys(object, iteratee) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.mapValues =
+liuyiliuyi.mapValues = 
 
 function mapValues(object, iteratee) {
   var f = liuyiliuyi.judge(iteratee);
