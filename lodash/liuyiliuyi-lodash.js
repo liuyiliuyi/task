@@ -467,7 +467,7 @@ function lastIdexOf(array, value, fromIndex = array.length -1) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.nth = (array, n) => n < 0 ? array[array.length + n] : array[0];
+liuyiliuyi.nth = (array, n) => n < 0 ? array[array.length + n] : array[n];
 
 // function nth(array, n) {
 //   return n < 0 ? array[array.length + n] : array[n];
@@ -4271,6 +4271,7 @@ liuyiliuyi.bindAll =
 function (object, methodNames) {
   methodNames = Array.isArray(methodNames) ? methodNames : [methodNames];
   methodNames.forEach((x) => object[x] = object[x].bind(object));
+  return object;
 }
 
 
@@ -4383,6 +4384,7 @@ function mixin(object = liuyiliuyi, source, option = {}) {   /*object.__proto__.
   var that = this;
   arguments.length === 1 && (source = object, object = liuyiliuyi);
   Object.keys(source).forEach((x) => that.isFunction(source[x]) && (that.isFunction(object) ? object.__proto__.x = source[x] : object = source[x]));
+  return object;
 }
 
 
