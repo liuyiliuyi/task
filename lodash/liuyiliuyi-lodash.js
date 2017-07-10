@@ -4433,18 +4433,21 @@ liuyiliuyi.overSome
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.property = 
+liuyiliuyi.property = path => (obj) => liuyiliuyi.toPath(path).reduce((x, y) => x[y], obj);
 
-function(path) {
-  var arr = path.match(/[^.]+/g);
-  return function(obj) {
-    var result = obj;
-    for(var i = 0; i < arr.length; i++) {
-      result = result[arr[i]];
-    }
-    return result;
-  }
-}
+
+// function(path) {
+//   path = this.toPath(path);
+//   return function(obj) {
+//     return path.reduce((x, y) => x[y], obj);
+//   //   var result = obj;
+//   //   for(var i = 0; i < arr.length; i++) {
+//   //     result = result[arr[i]];
+//   //   }
+//   //   return result;
+//   // }
+//   }
+// }
 
 
 ///////////////////
