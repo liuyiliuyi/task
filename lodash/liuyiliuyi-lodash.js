@@ -477,29 +477,33 @@ liuyiliuyi.nth = (array, n) => n < 0 ? array[array.length + n] : array[n];
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.pull =
+// liuyiliuyi.pull = (array, ...value) => (index = 0, [...array].reduce((x, y) => (value.includes(y) && x.splice(index--, 1), index++, x), array));
 
-function pull(array, ...value) {
-  for(i = 0; i < value.length; i++) {
-    for(j = 0; j < array.length; j++) {
-      if(array[j] === value[i]) {
-        array.splice(j,1);
-        j--;
-      }
-    }
-  }
-  return array;
-}
+
+liuyiliuyi.pull = (array, ...value) => [...array].reduce((x, y, i, arr) => (value.includes(y) && x.splice(i - arr.length + array.length, 1), x), array);
+
+
+// function pull(array, ...value) {
+//   for(i = 0; i < value.length; i++) {
+//     for(j = 0; j < array.length; j++) {
+//       if(array[j] === value[i]) {
+//         array.splice(j,1);
+//         j--;
+//       }
+//     }
+//   }
+//   return array;
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.pullAll = 
+liuyiliuyi.pullAll = (array, values) => liuyiliuyi.pull(array, ...values);
 
-function pullAll(array, values) {
-  return liuyiliuyi.pull.bind(null, array).apply(null,values);
-}
+// function pullAll(array, values) {
+//   return liuyiliuyi.pull.bind(null, array).apply(null,values);
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
