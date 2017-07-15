@@ -563,38 +563,42 @@ function pullAt(array, indexes) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.remove = 
+liuyiliuyi.remove = (array, predicate) => array.slice().reduce((x, y, i) => (predicate(y) && x.push(...array.splice(i - x.length, 1)), x), [])
 
-function remove(array, predicate) {
-  var arr = [];
-  for(var i = 0; i < array.length; i++) {
-    if(predicate(array[i]) == true) {
-      arr.splice(arr.length, 0, array.splice(i, 1)[0]);
-      i--;
-    }
-  }
-  return arr;
-}
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-liuyiliuyi.reverse = /*array => array.reduce((a, b) => )*/
-
-function reverse(array) {
-  return array.reverse();
-}
+// function remove(array, predicate) {
+//   var arr = [];
+//   for(var i = 0; i < array.length; i++) {
+//     if(predicate(array[i]) == true) {
+//       arr.splice(arr.length, 0, array.splice(i, 1)[0]);
+//       i--;
+//     }
+//   }
+//   return arr;
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.slice = 
+// liuyiliuyi.reverse = array => array.reduceRight((x, y) => , array)
 
-function slice(array, start = 0, end = array.length) {
-  return array.slice(start,end);
-}
+liuyiliuyi.reverse = array => array.reduce((x, y, i) => (i < Math.floor(array.length / 2) && ([x[i], x[array.length - 1 - i]] = [x[array.length - 1 - i], x[i]]), x), array)
+
+//解法2： array.sort(() => 1);
+
+// function reverse(array) {
+//   return array.reverse();
+// }
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+liuyiliuyi.slice = (array, start = 0, end = array.length) => [...array].reduce((x, y, i) => start <= i && i < end ? x.concat(y) : x, [])
+
+// function slice(array, start = 0, end = array.length) {
+//   return array.slice(start,end);
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -783,31 +787,31 @@ liuyiliuyi.sortedUniqBy =
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.tail =
+liuyiliuyi.tail = (array) => array.reduce((x, y, i) => i !== 0 ? x.concat(y) : x, [])
 
-function tail(array) {
-  return array.slice(1);
-}
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-liuyiliuyi.take =
-
-function take(array, n = 1) {
-  return array.slice(0, n)
-}
+// function tail(array) {
+//   return array.slice(1);
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.takeRight =
+liuyiliuyi.take = (array, n = 1) => array.reduce((x, y, i) => i < n ? x.concat(y) : x , [])
 
-function takeRight(array, n = 1) {
-  return n == 0 ? [] : array.slice(-n);
-}
+// function take(array, n = 1) {
+//   return array.slice(0, n)
+// }
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+liuyiliuyi.takeRight = (array, n = 1) => array.reduce((x, y, i) => i >= array.length - n ? x.concat(y) : x, []) 
+
+// function takeRight(array, n = 1) {
+//   return n == 0 ? [] : array.slice(-n);
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -844,11 +848,11 @@ function takeWhile(array, ...predicate) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.union = 
+liuyiliuyi.union = (...arrays) => [...new Set([].concat(...arrays))]
 
-function union(...array) {
-  return  [].concat(...array).reduce((a, b) => a.indexOf(b) == -1 ? a.concat(b) : a, []);
-}
+// function union(...array) {
+//   return  [].concat(...array).reduce((a, b) => a.indexOf(b) == -1 ? a.concat(b) : a, []);
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -891,11 +895,11 @@ function unionWith(...arg) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.uniq =
+liuyiliuyi.uniq = array => [...new Set(array)]
 
-function uniq(array) {
-  return array.reduce((x, y) => x.indexOf(y) == -1 ? x.concat(y) : x, [])
-}
+// function uniq(array) {
+//   return array.reduce((x, y) => x.indexOf(y) == -1 ? x.concat(y) : x, [])
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -932,11 +936,11 @@ function uniqWith(array, comparator) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.unzip =
+liuyiliuyi.unzip = (array) => array[0].map((x, i) => array.reduce((x, y) => x.concat(y[i]), []))
 
-function unzip(array) {
-  return array[0].map((x, i) => array.reduce((x, y) => x.concat(y[i]), []));
-}
+// function unzip(array) {
+//   return array[0].map((x, i) => array.reduce((x, y) => x.concat(y[i]), []));
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -952,36 +956,36 @@ function unzipWith(array, iteratee) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.without = 
+liuyiliuyi.without = (...arg) => arg.shift().reduce((x, y) => arg.includes(y) ? x : x.concat(y), [])
 
-function without(...arg) {
-  var array = arg.shift()
-  return array.reduce((x, y) => arg.indexOf(y) == -1 ? x.concat(y) : x, [])
-}
+// function without(...arg) {
+//   var array = arg.shift()
+//   return array.reduce((x, y) => arg.indexOf(y) == -1 ? x.concat(y) : x, [])
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.xor = 
+liuyiliuyi.xor = (...arg) => arg.reduce((x, y, i) => x.concat(y.reduce((a, b) => arg.every((z, j) => i === j ? true : !z.includes(b)) ? a.concat(b) : a,[])), [])
 
-function xor(...arg) {
-  var array = Array.from(arg);
-  var arr = [].concat(...array.map((x) => Array.from(new Set(x))));
-  var result = [];
-  var map = new Map();
-  for(let value of arr) {
-    if(map.get(value) == undefined) {
-      map.set(value, 1);
-    } else {var val = map.get(value); map.set(value, ++val);} 
-  }
-  for(let value of arr) {
-    if(map.get(value) == 1) {
-      result.push(value);
-    }
-  }
-  return result;
-}
+// function xor(...arg) {
+//   var array = Array.from(arg);
+//   var arr = [].concat(...array.map((x) => Array.from(new Set(x))));
+//   var result = [];
+//   var map = new Map();
+//   for(let value of arr) {
+//     if(map.get(value) == undefined) {
+//       map.set(value, 1);
+//     } else {var val = map.get(value); map.set(value, ++val);} 
+//   }
+//   for(let value of arr) {
+//     if(map.get(value) == 1) {
+//       result.push(value);
+//     }
+//   }
+//   return result;
+// }
   
 
 
@@ -1033,12 +1037,12 @@ function xorWith(...arg) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.zip =
+liuyiliuyi.zip = (...arg) => arg[0].map((x, i) => arg.reduce((x, y) => x.concat(y[i]), []))
 
-function zip(...arg) {
-  //Array.from(arg)
-  return arg[0].map((x, i) => arg.reduce((x, y) => x.concat(y[i]), []));
-}
+// function zip(...arg) {
+//   //Array.from(arg)
+//   return arg[0].map((x, i) => arg.reduce((x, y) => x.concat(y[i]), []));
+//}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
