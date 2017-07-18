@@ -546,18 +546,53 @@ function pullAllWith(array, values, comparator) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.pullAt =
+// liuyiliuyi.pullAt = (array, indexes) => array.map((x, i) => [x, i]).reduce((a, b, k) => indexes.includes(b[1]) ,[])
+
+
+
+// liuyiliuyi.pullAt = (array, indexes) => [...array].reduce((x, y, i) => (i === indexes[0] && (x.push(...array.splice(i - x.length, 1)) && indexes.shift()), x), [])
+
+liuyiliuyi.pullAt = 
+
+// function pullAt(array, indexes) {
+//   var result = [];
+//   var count = 0;
+//   for(var i = 0; i < indexes.length; i++) {
+//     result.push(array[indexes[i]]);
+//   }
+//   var sortArr = indexes.sort((x, y) => x - y);
+//   for(var j = 0; j < sortArr.length; j++) {
+//     array.splice(sortArr[j] - count, 1);
+//     count++;
+//   }
+//   return result;
+// }
 
 function pullAt(array, indexes) {
-  var arr = indexes.sort((a, b) => a - b);
-  var amount = 0;
   var result = [];
-  for(var i = 0; i < arr.length; i++) {
-    result.push(...array.splice(arr[i] - amount, 1));
-    amount++;
+  for(var i = 0; i < indexes.length; i++) {
+    result.push(array[indexes[i]]);
+  }
+  var sortArr = indexes.sort((x, y) => y - x);
+  for(var j = 0; j < sortArr.length; j++) {
+    array.splice(sortArr[j], 1);
   }
   return result;
 }
+
+
+
+
+// function pullAt(array, indexes) {
+//   var arr = indexes.sort((a, b) => a - b);
+//   var amount = 0;
+//   var result = [];
+//   for(var i = 0; i < arr.length; i++) {
+//     result.push(...array.splice(arr[i] - amount, 1));
+//     amount++;
+//   }
+//   return result;
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
