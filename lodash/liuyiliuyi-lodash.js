@@ -1270,21 +1270,22 @@ function flatMap(collection, iteratee) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.flatMapDeep =
+liuyiliuyi.flatMapDeep = (collection, iteratee) => liuyiliuyi.flattenDeep(liuyiliuyi.flatMap(collection, iteratee));
 
-function flatMapDeep(collection, iteratee) {
-  return liuyiliuyi.flattenDeep(liuyiliuyi.flatMap(collection, iteratee));
-}
+// function flatMapDeep(collection, iteratee) {
+//   return liuyiliuyi.flattenDeep(liuyiliuyi.flatMap(collection, iteratee));
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.flatMapDepth = 
+liuyiliuyi.flatMapDepth = (collection, iteratee) => liuyiliuyi.flattenDepth(liuyiliuyi.flatMap(collection, iteratee))
 
-function flatMapDepth(collection, iteratee) {
-  return liuyiliuyi.flattenDepth(liuyiliuyi.flatMap(collection, iteratee))
-}
+
+// function flatMapDepth(collection, iteratee) {
+//   return liuyiliuyi.flattenDepth(liuyiliuyi.flatMap(collection, iteratee))
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1994,41 +1995,49 @@ function gte(value, other) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.isArguments =
-
-function isArguments(value) {
-  return Object.prototype.toString.call(value) == "[object Arguments]";
-}
+"Arguments|Array|ArrayBuffer|Function|Boolean|Buffer|Date|HTMLBodyElement|Map|Object|String|RegExp|Error|Number|Function|WeakSet|WeakMap|Uint8Array|Symbol|Set"
+.split("|").forEach(x => liuyiliuyi["is" + x] = value => ({}).toString.call(value) === `[object ${x}]`);
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.isArray =
 
-function isArray(value) {
-  return Object.prototype.toString.call(value) == "[object Array]";
-}
+
+// liuyiliuyi.isArguments =
+
+// function isArguments(value) {
+//   return Object.prototype.toString.call(value) == "[object Arguments]";
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.isArrayBuffer =
+// liuyiliuyi.isArray =
 
-function isArrayBuffer(value) {
-  return Object.prototype.toString.call(value) == "[object ArrayBuffer]";
-}
+// function isArray(value) {
+//   return Object.prototype.toString.call(value) == "[object Array]";
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.isArrayLike = 
+// liuyiliuyi.isArrayBuffer =
 
-function isArrayLike(value) {
-  return value.length < Number.MAX_SAFE_INTEGER && value.length >= 0 && Object.prototype.toString.call(value) != "[object Function]"
-}
+// function isArrayBuffer(value) {
+//   return Object.prototype.toString.call(value) == "[object ArrayBuffer]";
+// }
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+liuyiliuyi.isArrayLike = value => value.length < Number.MAX_SAFE_INTEGER && value.length >= 0 && !liuyiliuyi.isFunction(value);
+
+// function isArrayLike(value) {
+//   return value.length < Number.MAX_SAFE_INTEGER && value.length >= 0 && Object.prototype.toString.call(value) != "[object Function]"
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2044,30 +2053,30 @@ function isArrayLikeObject(value) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.isBoolean =
+// liuyiliuyi.isBoolean =
 
-function isBoolean(value) {
-  return Object.prototype.toString.call(value) == "[object Boolean]";
-}
+// function isBoolean(value) {
+//   return Object.prototype.toString.call(value) == "[object Boolean]";
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.isBuffer =
+// liuyiliuyi.isBuffer =
 
-function isBuffer(value) {
-  return Object.prototype.toString.call(value) == "[object Buffer]";
-}
+// function isBuffer(value) {
+//   return Object.prototype.toString.call(value) == "[object Buffer]";
+// }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.isDate =
+// liuyiliuyi.isDate =
 
-function isDate(value) {
-  return Object.prototype.toString.call(value) == "[object Date]"
-}
+// function isDate(value) {
+//   return Object.prototype.toString.call(value) == "[object Date]"
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2087,10 +2096,10 @@ liuyiliuyi.isEmpty =
 
 function isEmpty(value) {
   switch(true) {
-    case this.kindOf(value) == "[object Array]" && value.length != 0: return false;
-    case this.kindOf(value) == "[object Map]" && value.size != 0: return false;
-    case this.kindOf(value) == "[object Object]" && Object.keys(value).length != 0: return false;
-    case this.kindOf(value) == "[object String]" && value.length != 0: return false;
+    case this.isArray(value) && value.length != 0: return false;
+    case this.isMap(value) && value.size != 0: return false;
+    case this.isObject(value) && Object.keys(value).length != 0: return false;
+    case this.isString(value) && value.length != 0: return false;
     default: return true;
   }
 }
@@ -2148,11 +2157,11 @@ function isEqualWith(value, other, fn) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.isError = 
+// liuyiliuyi.isError = 
 
-function isError(value) {
-  return Object.prototype.toString.call(value) == "[object Error]";
-}
+// function isError(value) {
+//   return Object.prototype.toString.call(value) == "[object Error]";
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2168,11 +2177,11 @@ function isFinite(value) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.isFunction = 
+// liuyiliuyi.isFunction = 
 
-function isFunction(value) {
-  return Object.prototype.toString.call(value) == "[object Function]";
-}
+// function isFunction(value) {
+//   return Object.prototype.toString.call(value) == "[object Function]";
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2203,11 +2212,11 @@ liuyiliuyi.kindOf = function kindOf(value) {
 }
 
 
-liuyiliuyi.isMap =
+// liuyiliuyi.isMap =
 
-function isMap(value) {
-  return this.kindOf(value) == "[object Map]";
-}
+// function isMap(value) {
+//   return this.kindOf(value) == "[object Map]";
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2243,187 +2252,186 @@ function isNaN(value) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.isNative = 
+liuyiliuyi.isNative = value => !!~value.toString().indexOf(" [native code] ")
 
-function isNative(value) {
-  return value.toString().indexOf(" [native code] ") != -1;
-}
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-liuyiliuyi.isNil =
-
-function isNil(value) {
-  return value == undefined;
-}
+// function isNative(value) {
+//   return !!~value.toString().indexOf(" [native code] ");
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.isNull =
+liuyiliuyi.isNil = value => value == undefined;
 
-function isNull(value) {
-  return value === null;
-}
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-liuyiliuyi.isNumber =
-
-function isNumber(value) {
-  return this.kindOf(value) == "[object Number]";
-}
+// function isNil(value) {
+//   return value == undefined;
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.isObject =
+liuyiliuyi.isNull = value => value === null;
 
-function isObject(value) {
-  return (typeof value == "object" || typeof value == "function") && value != null;
-}
+// function isNull(value) {
+//   return value === null;
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.isObjectLike =
+// liuyiliuyi.isNumber =
 
-function isObjectLike(value) {
-  return typeof value == "object" && value != null;
-}
+// function isNumber(value) {
+//   return this.kindOf(value) == "[object Number]";
+// }
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+liuyiliuyi.isObject = value => (typeof value == "object" || typeof value == "function") && value != null
+
+// function isObject(value) {
+//   return (typeof value == "object" || typeof value == "function") && value != null;
+// }
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+liuyiliuyi.isObjectLike = value => typeof value == "object" && value != null;
+
+// function isObjectLike(value) {
+//   return typeof value == "object" && value != null;
+// }
  
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.isPlainObject = 
+liuyiliuyi.isPlainObject = value => value.constructor == Object || value.__proto__ == null;
 
-function isPlainObject(value) {
-  return value.constructor == Object || value.__proto__ == null;
-}
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-liuyiliuyi.isRegExp =
-
-function isRegExp(value) {
-  return this.kindOf(value) == "[object RegExp]";
-}
+// function isPlainObject(value) {
+//   return value.constructor == Object || value.__proto__ == null;
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.isSafeInteger =
+// liuyiliuyi.isRegExp =
 
-function isSafeInteger(value) {
-  return liuyiliuyi.isInteger(value) && Math.abs(value) <= Number.MAX_SAFE_INTEGER;
-}
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-liuyiliuyi.isSet = 
-
-function isSet(value) {
-  return this.kindOf(value) == "[object Set]";
-}
+// function isRegExp(value) {
+//   return this.kindOf(value) == "[object RegExp]";
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.isString =
+liuyiliuyi.isSafeInteger = value => liuyiliuyi.isInteger(value) && Math.abs(value) <= Number.MAX_SAFE_INTEGER;
 
-function isString(value) {
-  return this.kindOf(value) == "[object String]";
-}
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-liuyiliuyi.isSymbol =
-
-function isSymbol(value) {
-  return this.kindOf(value) == "[object Symbol]";
-}
+// function isSafeInteger(value) {
+//   return liuyiliuyi.isInteger(value) && Math.abs(value) <= Number.MAX_SAFE_INTEGER;
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.isTypedArray =
+// liuyiliuyi.isSet = 
 
-function isTypedArray(value) {
-  return this.kindOf(value) === "[object Uint8Array]";
-}
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-liuyiliuyi.isUndefined =
-
-function isUndefined(value) {
-  return value === undefined;
-} 
+// function isSet(value) {
+//   return this.kindOf(value) == "[object Set]";
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.isWeakMap =
+// liuyiliuyi.isString =
 
-function isWeakMap(value) {
-  return this.kindOf(value) == "[object WeakMap]";
-}
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-liuyiliuyi.isWeakSet =
-
-function isWeakSet(value) {
-  return this.kindOf(value) == "[object WeakSet]";
-}
+// function isString(value) {
+//   return this.kindOf(value) == "[object String]";
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.lt = 
+// liuyiliuyi.isSymbol =
 
-function lt(value, other) {
-  return value < other;
-}
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-liuyiliuyi.lte =
-
-function lte(value, other) {
-  return value <= other;
-}
+// function isSymbol(value) {
+//   return this.kindOf(value) == "[object Symbol]";
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.toArray =
+liuyiliuyi.isTypedArray = value => liuyiliuyi.kindOf(value) === "[object Uint8Array]";
+
+// function isTypedArray(value) {
+//   return this.kindOf(value) === "[object Uint8Array]";
+// }
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+liuyiliuyi.isUndefined = value => value === undefined;
+
+// function isUndefined(value) {
+//   return value === undefined;
+// } 
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+// liuyiliuyi.isWeakMap =
+
+// function isWeakMap(value) {
+//   return this.kindOf(value) == "[object WeakMap]";
+// }
+
+
+// ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+// liuyiliuyi.isWeakSet =
+
+// function isWeakSet(value) {
+//   return this.kindOf(value) == "[object WeakSet]";
+// }
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+liuyiliuyi.lt = (value, other) => value < other;
+
+// function lt(value, other) {
+//   return value < other;
+// }
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+liuyiliuyi.lte = (value, other) => value <= other;
+
+// function lte(value, other) {
+//   return value <= other;
+// }
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+liuyiliuyi.toArray = 
 
 function toArray(value) {
   var arr = [];
@@ -2455,31 +2463,31 @@ function toFinite(value) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.toInteger =
+liuyiliuyi.toInteger = value => Math.floor(liuyiliuyi.toFinite(value));
 
-function toInteger(value) {
-  return Math.floor(this.toFinite(value));
-}
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-liuyiliuyi.toLength =
-
-function toLength(value) {
-  return this.toInteger(value) > 4294967295 ? 4294967295 : this.toInteger(value);
-}
+// function toInteger(value) {
+//   return Math.floor(this.toFinite(value));
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.toNumber =
+liuyiliuyi.toLength = value => liuyiliuyi.toInteger(value) > 4294967295 ? 4294967295 : liuyiliuyi.toInteger(value);
 
-function toNumber(value) {
-  return Number(value);
-}
+// function toLength(value) {
+//   return this.toInteger(value) > 4294967295 ? 4294967295 : this.toInteger(value);
+// }
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+liuyiliuyi.toNumber = value => Number(value);
+
+// function toNumber(value) {
+//   return Number(value);
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2511,11 +2519,11 @@ function toSafeInteger(value) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.toString =
+liuyiliuyi.toString = value => value.toString();
 
-function toString(value) {
-  return value.toString();
-}
+// function toString(value) {
+//   return value.toString();
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2524,41 +2532,33 @@ function toString(value) {
 Math//////////////////////////////////////////////////////////
 
 
-liuyiliuyi.add = function add(x, y) {
-  return x + y;
-}
+liuyiliuyi.add = (x, y) => x + y;
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.ceil = function ceil(number, pos = 0) {
-  return Math.ceil(number * Math.pow(10, pos)) / Math.pow(10,pos);
-}
+liuyiliuyi.ceil = (number, pos = 0) => Math.ceil(number * Math.pow(10, pos)) / Math.pow(10,pos);
 
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-liuyiliuyi.divide = function divide(dividend, divisor) {
-  return dividend / divisor;
-}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.floor = function floor(number, pos = 0) {
-  return Math.floor(number * Math.pow(10, pos)) / Math.pow(10,pos);
-}
+liuyiliuyi.divide = (dividend, divisor) => dividend / divisor;
+
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.max = function max(array) {
-  return array.length == 0? undefined : Math.max.apply(null, array);
-}
+liuyiliuyi.floor = (number, pos = 0) => Math.floor(number * Math.pow(10, pos)) / Math.pow(10,pos);
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+liuyiliuyi.max = array => array.length == 0? undefined : Math.max.apply(null, array);
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2597,10 +2597,12 @@ liuyiliuyi.maxBy = function maxBy(array, iteratee) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.mean = function mean(array) {
-  //array.reduce((a,b) => (a + b) / i * (i - 1))
-  return array.reduce((a, b) => a + b) / array.length;
-}
+liuyiliuyi.mean = array => array.reduce((a, b) => a + b) / array.length;
+
+// function mean(array) {
+//   //array.reduce((a,b) => (a + b) / i * (i - 1))
+//   return array.reduce((a, b) => a + b) / array.length;
+// }
 
 
 liuyiliuyi.matches = target => source => liuyiliuyi.isMatch(target, source);
@@ -2634,11 +2636,11 @@ liuyiliuyi.meanBy = function meanBy(array, iteratee) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.min =
+liuyiliuyi.min = array => array.length === 0 ? undefined : Math.min(...array);
 
-function min(array) {
-  return array.length === 0 ? undefined : Math.min(...array);
-}
+// function min(array) {
+//   return array.length === 0 ? undefined : Math.min(...array);
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2663,41 +2665,44 @@ function minBy(array, iteratee) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.multiply =
+liuyiliuyi.multiply = (x, y) => x * y
 
-function multiply(x, y) {
-  return x * y;
-}
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-liuyiliuyi.round = 
-
-function round(number, pos = 0) {
-  return Math.round(number * 10 ** pos) / 10 ** pos;
-}
+// function multiply(x, y) {
+//   return x * y;
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.subtract =
+liuyiliuyi.round = (number, pos = 0) => Math.round(number * 10 ** pos) / 10 ** pos;
 
-function subtract(minuend, subtrahend) {
-  return minuend - subtrahend;
-}
+// function round(number, pos = 0) {
+//   return Math.round(number * 10 ** pos) / 10 ** pos;
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.sum = 
+liuyiliuyi.subtract = (minuend, subtrahend) => minuend - subtrahend;
 
-function sum(array) {
-  return array.reduce((a, b) => a + b);
-}
+
+
+// function subtract(minuend, subtrahend) {
+//   return minuend - subtrahend;
+// }
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+liuyiliuyi.sum = array => array.reduce((a, b) => a + b);
+
+
+// function sum(array) {
+//   return array.reduce((a, b) => a + b);
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2726,12 +2731,12 @@ function sumBy(array, iteratee) {
 //Number/////////////////////////////////////////////////
 
 
-liuyiliuyi.clamp =
+liuyiliuyi.clamp = (...args) => args.length < 2 ? args.sort((a, b) => a - b)[0] : args.sort((a, b) => a - b)[1];
 
-function clamp(number, lower, upper) {
-  result_arr = Array.from(arguments).sort((a, b) => a - b) ;
-  return result_arr[1];
-}
+// function clamp(number, lower, upper) {
+//   result_arr = Array.from(arguments).sort((a, b) => a - b) ;
+//   return result_arr[1];
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -4289,11 +4294,11 @@ liuyiliuyi.upperFirst = str => str.replace(/^(\w)/, m => m.toUpperCase())
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-liuyiliuyi.words =
+liuyiliuyi.words = (str, pattern = /\w+/g) => str.match(pattern);
 
-function words(str, pattern = /\w+/g) {
-  return str.match(pattern);
-}
+// function words(str, pattern = /\w+/g) {
+//   return str.match(pattern);
+// }
 
 
 
