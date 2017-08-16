@@ -1,0 +1,144 @@
+* {
+  box-sizing: border-box;
+}
+
+
+html {
+  background-color: white;
+}
+
+body {
+  margin: 0;
+  //background-color: rgba(0, 0, 0, 0.04);
+}
+
+
+.container {
+  width: 800px;
+  padding: 0 15px;
+  margin: 0 auto;
+  background-color: rgba(0, 0, 0, 0.06);
+}
+
+.container-fluid {
+  width: 100%;
+}
+
+/* .row {
+  overflow: hidden;
+} */
+
+.row {
+  margin: 0 -15px;
+}
+
+.row::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+div {
+  background-color: rgba(0, 0, 0, 0.06)
+}
+
+[class^=col-] {
+  float: left;
+  border: 1px solid rgba(255,255, 255, 0.5);
+  position: relative;
+  padding: 10px 15px;
+}
+
+.col-1x {
+  width: 10%;
+  float: left;
+}
+
+
+.col-2x {
+  width: 20%;
+}
+
+.col-3x {
+  width: 30%;
+}
+
+.col-4x {
+  width: 40%;
+
+}
+
+
+.col-5x {
+  width: 50%;
+}
+
+.col-6x {
+  width: 60%;
+}
+
+.col-7x {
+  width: 70%;
+}
+
+.col-8x {
+  width: 80%;
+
+}
+
+.col-9x {
+  width: 90%;
+}
+
+.col-10x {
+  width: 100%;
+}
+
+.offset-1 {
+  margin-left: 10%;
+}
+
+.offset-2 {
+  margin-left: 20%;
+}
+
+.offset-3 {
+  margin-left: 30%;
+}
+
+.push-1 {
+  left: 10%;
+}
+
+.pull-1 {
+  left: -10%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
